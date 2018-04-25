@@ -36,5 +36,10 @@ module TodoApi
     # Associations are any attribute in a serializer you define with:
     # `belongs_to`, `has_one`, or `has_many`.
     ActiveModelSerializers.config.adapter = :json
+
+    # Generate a `structure.sql` file instead of `schema.rb`.
+    # This file contains the schema (but not the data) from the database.
+    # Rails loads this file into the test database when we run `rspec`.
+    config.active_record.schema_format = :sql
   end
 end
