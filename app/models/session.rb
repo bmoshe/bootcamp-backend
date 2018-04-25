@@ -44,6 +44,13 @@ class Session < ApplicationRecord
   before_create :set_user_from_credentials, if: -> { user.nil? }
   before_create :set_expires_at, if: -> { expires_at.nil? }
 
+  # Scopes are a neat Rails feature which lets you wrap commonly used portions of queries in a method.
+  # They can be chained together, and make testing and keeping code clean much easier.
+  # For example, if you wanted to see all of the `active` Sessions:
+  #
+  #  Session.active # => #<ActiveRecord::Relation [...]>
+  #
+  # See more: http://guides.rubyonrails.org/active_record_querying.html#scopes
   scope :active, -> { where('sessions.expires_at > ?', Time.current) }
 
 private
