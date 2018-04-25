@@ -41,5 +41,14 @@ module TodoApi
     # This file contains the schema (but not the data) from the database.
     # Rails loads this file into the test database when we run `rspec`.
     config.active_record.schema_format = :sql
+
+    # We're using RSpec as our testing framework, and FactoryBot
+    # to generate data when running our unit tests.
+    # Here we tell Rails to also generate specs and factories
+    # when running generators for models, controllers, etc.
+    config.generators do |g|
+      g.fixture_replacement :factory_bot
+      g.test_framework      :rspec
+    end
   end
 end
