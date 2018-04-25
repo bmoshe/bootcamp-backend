@@ -2,7 +2,7 @@
 
 class SessionsController < ApplicationController
   def show
-    authorize(current_session)
+    authorize(Session)
     render json: current_session
   end
 
@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    authorize(current_session)
+    authorize(Session)
     current_session.destroy!
     head :no_content
   end

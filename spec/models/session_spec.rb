@@ -64,4 +64,19 @@ RSpec.describe Session, type: :model do
   it 'sets an expires-at timestamp when created' do
     expect { subject.save }.to change { subject.expires_at }.to be_present
   end
+
+  describe '#active' do
+    let(:session) { create(:session, expires_at: 3.hours.from_now) }
+
+    subject { Session.active }
+
+    it 'includes sessions that expire in the future' do
+      should include(session)
+    end
+
+    it "doesn't include sessions that have already expired" do
+      session.update(expires_at: 3.hours.ago)
+      should_not include(session)
+    end
+  end
 end

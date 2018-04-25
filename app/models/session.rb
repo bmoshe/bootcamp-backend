@@ -44,6 +44,8 @@ class Session < ApplicationRecord
   before_create :set_user_from_credentials, if: -> { user.nil? }
   before_create :set_expires_at, if: -> { expires_at.nil? }
 
+  scope :active, -> { where('sessions.expires_at > ?', Time.current) }
+
 private
 
   def set_user_from_credentials

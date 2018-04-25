@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
 
   def current_session
     return @current_session if defined?(@current_session)
-    @current_session = Session.find_by(token: session_token)
+    @current_session = Session.active.find_by(token: session_token)
   end
 
 private
