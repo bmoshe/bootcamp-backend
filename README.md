@@ -402,8 +402,8 @@ Rubocop also accepts file paths, so if we wanted to only clean up the `Task` mod
 rubocop -a app/models/task.rb
 ```
 
-Remember to look over any corrections that Rubocop does before you commit them! Sometimes, it may choose to
-indent or align things in some pretty wonky ways. If you're ever in doubt, poke someone about what Rubocop
-is telling you to do, and we'll steer you in the right direction.
+**NOTE:** Remember to look over any corrections that Rubocop does before you commit them! Sometimes,
+it may choose to indent or align things in some pretty wonky ways. If you're ever in doubt,
+poke someone about what Rubocop is telling you to do, and we'll steer you in the right direction.
 
 ## Bonus - User Sign Up
