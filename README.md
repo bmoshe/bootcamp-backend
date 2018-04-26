@@ -184,7 +184,7 @@ For more information about callbacks, there's information available in this guid
 http://guides.rubyonrails.org/active_record_callbacks.html
 
 We'll also need Rails' change tracking in this section, which you can read more about here:
-https://richonrails.com/articles/change-tracking-with-activemodel-dirty
+http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
 
 For certain actions, we need to include additional side-effects that are applied to the model.
 What this really means is we add code that is triggered by certain events in our models.
