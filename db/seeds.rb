@@ -10,4 +10,6 @@
 
 # Here's a test User account. You'll be able to login with these credentials.
 # You can replace the email with your own Platterz email, if you so choose.
-User.create!(email: 'test@platterz.ca', password: 'password')
+User.find_or_create_by!(email: 'test@platterz.ca') do |user|
+  user.password = 'password'
+end
