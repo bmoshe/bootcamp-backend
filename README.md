@@ -203,7 +203,7 @@ Examples of when we might use this is:
 In our Todo app, we want to keep track of when a Task is completed. To do this, we can use a callback to set
 the `completed_at` attribute on the Task when `completed` becomes true.
 
-For some examples of callbacks in actions, take a look at `app/models/session.rb`.
+For some examples of callbacks in action, take a look at `app/models/session.rb`.
 
 ### Defining Factories for Models
 
