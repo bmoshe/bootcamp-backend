@@ -162,6 +162,41 @@ rails db:rollback
 This will rollback the last migration that was applied to the database.
 
 ### Defining Associations
+Rails provides excellent resources about associations:
+http://guides.rubyonrails.org/association_basics.html
+
+At a high level, associations are relationships between multiple models. They reflect the relationships in our
+database, and translate them into something that we can use conveniently in Ruby.
+
+For example, the `tasks` table should have a `user_id` column, which refers to an entry in the `users` table.
+It represents the User that owns the Task. In Rails terminology, it would be said that the Task belongs to the
+User. Similarly, the User has many Tasks.
+
+When defining these associations in our models, we use that same terminology.
+For example, in the `Task` model, we would define:
+
+```ruby
+class Task < ApplicationRecord
+  ...
+  belongs_to :user
+  ...
+end
+```
+
+Rails will automatically infer that this association is bound to the `user_id` attributes, and that it refers
+to the `User` model.
+
+Similarly, it we wanted to define the inverse association, we would write:
+
+```ruby
+class User < ApplicationRecord
+  ...
+  has_many :tasks
+  ...
+end
+```
+
+For examples of how associations are defined and used, see `app/models/user.rb` and `app/models/session.rb`.
 
 ### Adding Data Validations
 Before starting, you might want to have a look at this guide about Rails validations:
