@@ -150,7 +150,7 @@ Once you're happy with your table structure, and you're ready to run migrations:
 rails db:migrate
 ```
 
-If you've made a mistake, and want to undo the migration and change it, you can run:
+If you've made a mistake, or just want to undo the migration, you can run:
 
 ```bash
 rails db:rollback
