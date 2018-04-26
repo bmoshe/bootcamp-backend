@@ -325,3 +325,9 @@ rails g pundit:policy Task
 ### Policy Scopes
 
 ### Writing RSpecs
+
+## Step 5 - Wrapping Up
+
+### Rubocop (The Linter)
+
+## Bonus - User Sign Up
