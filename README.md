@@ -186,8 +186,8 @@ http://guides.rubyonrails.org/active_record_callbacks.html
 We'll also need Rails' change tracking in this section, which you can read more about here:
 https://richonrails.com/articles/change-tracking-with-activemodel-dirty
 
-For certain actions, it may make sense to include additional side-effects that are applied to the model.
-What this really means is that we might want to add code that is triggered by certain events in our models.
+For certain actions, we need to include additional side-effects that are applied to the model.
+What this really means is we add code that is triggered by certain events in our models.
 
 Examples of when we might use this is:
  - Setting a timestamp when the status of a model changes
