@@ -33,4 +33,14 @@ class User < ApplicationRecord
   #
   # See more: http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password
   has_secure_password
+
+  # This is a relationship we define between this `User` and all the `Sessions` that they own.
+  # Rails automatically infers that this refers to the Session model, and uses the `user_id` column.
+  #
+  # We also define that Session depend on the User that owns them, and that they should be destroyed (deleted)
+  # together with the User, so as to not leave around orphan records or violate foreign key constraints.
+  #
+  # For more information about associations, see:
+  # http://guides.rubyonrails.org/association_basics.html#the-has-many-association
+  has_many :sessions, dependent: :destroy
 end
