@@ -46,8 +46,8 @@ class Session < ApplicationRecord
   # See more: http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to
   belongs_to :user, optional: true
 
-  # We require an email address and password to login. Here we validate that the email and password
-  # are present (not nil or empty) when the Session is being created.
+  # We require an email address and password to login. Here we define validates to ensure that
+  # the email and password are present (not nil or empty) when the Session is being created.
   validates :email, :password, presence: { on: :create }
 
   # The Session uses a unique, secure token to handle authentication with the frontend.
