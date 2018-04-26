@@ -3,9 +3,8 @@
 class ApplicationController < ActionController::API
   include Pundit
 
-  # This is the app's authentication logic.
-  # It tries to fetch an active Session using a session token.
-  # The app expects the session token to be passed in a `Session-Token` header.
+  # This is the app's authentication logic. It tries to fetch an active Session using a secure token.
+  # The app expects a session token to be passed in the `Session-Token` header.
 
   def current_user
     current_session&.user

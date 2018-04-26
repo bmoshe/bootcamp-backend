@@ -27,6 +27,23 @@ class Session < ApplicationRecord
   attribute :email, :string
   attribute :password, :string
 
+  # This is a relationship we define between this `Session` and a `User` that owns it.
+  # Rails automatically infers that this refers to the User model, and uses the `user_id` column
+  # based on the name of the association.
+  #
+  # This association creates a `user` method on the Session, which Rails manages for us.
+  # It takes care of loading the User from the database:
+  #
+  #  session.user == User.find(session.user_id)
+  #
+  # Rails also automatically sets the `user_id` attribute when we assign a value to the association.
+  #
+  #  session.user = User.find(1)
+  #  session.user_id # => 1
+  #
+  # We define that the association is `optional` because we have our own logic that assigns it,
+  # and Rails validates that `belongs_to` associations are not `nil` by default.
+  # See more: http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to
   belongs_to :user, optional: true
 
   # We require an email address and password to login. Here we validate that the email and password
