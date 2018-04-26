@@ -176,7 +176,7 @@ Alternatively, we can also use its shortened form:
 rails g model Task
 ```
 
-These generators create the following files:
+This generator creates the following files:
  - `app/models/task.rb` which is the model file itself.
  - `db/migrate/####_create_tasks.rb` is the database migration to create the `tasks` table in our database.
  - `spec/factories/tasks.rb` contains a factory that used to construct Tasks with placeholder data, for testing.
@@ -418,6 +418,10 @@ The Frontend needs to be able to:
 ```bash
 rails g controller Tasks
 ```
+
+This generator creates the following files:
+ - `app/controllers/tasks_controller.rb` which is the actual controller.
+ - `spec/controllers/tasks_controller_spec.rb` is an RSpec file, where we define tests for the controller.
 
 ### Defining Actions
 
