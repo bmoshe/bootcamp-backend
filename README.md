@@ -143,3 +143,59 @@ We want to include the following columns in our tasks table:
 For each column, also consider:
  - Does it make sense for this column to be null?
  - Should this column have a default value?
+
+Once you're happy with your table structure, and you're ready to run migrations:
+
+```bash
+rails db:migrate
+```
+
+If you've made a mistake, and want to undo the migration and change it, you can run:
+
+```bash
+rails db:rollback
+```
+
+This will rollback the last migration that was applied to the database.
+
+### Adding Data Validations
+Before starting, you might want to have a look at this guide about Rails validations:
+http://guides.rubyonrails.org/active_record_validations.html
+
+Once the database table is ready, we can move onto adding validations to our model.
+Validations should ensure that the data being saved to the database makes sense. Validations that fail
+apply errors to the model, which can be presented to the user to help them correct their input.
+
+For example: If we wanted to ensure that the user doesn't create a task without a name, we would write:
+
+```ruby
+validates :name, presence: true
+```
+
+The Rails presense validation relies on the `.present?` method defined on all objects. It returns `false` for
+things like `nil`, `false`, `[]` (empty array), `{}` (empty Hash), `''` (empty String).
+In our case, this would ensure that the name is not `nil` or an empty string.
+
+For this task, it's up to you which validations you use.
+As examples for this task, feel free to look at the validations in `app/models/user.rb` and `app/models/session.rb`.
+
+### Adding Callbacks (Side Effects)
+For more information about callbacks, there's information available in this guide:
+http://guides.rubyonrails.org/active_record_callbacks.html
+
+We'll also need Rails' change tracking in this section, which you can read more about here:
+https://richonrails.com/articles/change-tracking-with-activemodel-dirty
+
+For certain actions, it may make sense to include additional side-effects that are applied to the model.
+What this really means is that we might want to add code that is triggered by certain events in our models.
+
+Examples of when we might use this is:
+ - Setting a timestamp when the status of a model changes
+ - Creating or destroying an associated record when a model is created or destroyed
+ - Synchronizing the state of a model with an external system
+ - Triggering a job, email, or event when a model is saved
+
+In our Todo app, we want to keep track of when a Task is completed. To do this, we can use a callback to set
+the `completed_at` attribute on the Task when `completed` becomes true.
+
+For some examples of callbacks in actions, take a look at `app/models/session.rb`.
