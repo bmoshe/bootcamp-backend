@@ -73,6 +73,86 @@ To close the rails console, we can use `quit` or `exit`.
 ## Getting Familiar with Rails
 TODO [Examples about creating, updating, and deleting Users]
 
+### Models
+Models are also used to retrieve records from, and also to create and edit records in the database.
+Each instance of a model represents a single row that exists in the corresponding database table.
+
+In the starter code, we've already have a `User` model, which maps to the `users` table in the database.
+The model is found in `app/models/user.rb`.
+
+#### Querying the Database
+
+```ruby
+user = User.first
+user.email # => "test@platterz.ca"
+user.password # => nil
+user.password_digest # => "$2a$10$..."
+```
+
+```ruby
+User.find(1)    # => #<User id: 1, ...>
+User.find(1000) # => ActiveRecord::RecordNotFound: Couldn't find User with 'id'=1000
+```
+
+```ruby
+User.find_by(email: 'test@platterz.ca') # => #<User id: 1, ...>
+User.find_by(email: 'fake') # => nil
+```
+
+```ruby
+User.find_by!(email: 'test@platterz.ca') # => #<User id: 1, ...>
+User.find_by!(email: 'fake') # => ActiveRecord::RecordNotFound: Couldn't find User
+```
+
+For more information about the Query Interface, and examples of how to use it:
+http://guides.rubyonrails.org/active_record_querying.html#retrieving-objects-from-the-database
+
+#### Creating Records
+To create a new User record, we can just construct it like as normal Ruby object, passing attributes
+we want to set as a Hash. To persist the change to the database, we call `.save`.
+
+```ruby
+user = User.new(email: 'foo@bar.ca', password: 'password')
+user.save # => true
+```
+
+We can also use the `.create` method, which encapsulates both construction and saving the record in single call:
+
+```ruby
+user = User.create(email: 'foo@bar.ca', password: 'password')
+```
+
+For more examples: http://guides.rubyonrails.org/active_record_basics.html#create
+
+#### Updating Records
+Updating an existing record in database works similarly. Attributes can be assigned like any normal attribute
+on a Ruby object, and any changes made are saved to the database with `.save`.
+
+```ruby
+user = User.find(1)
+user.email = 'foo-bar@platterz.ca'
+user.save
+```
+
+We can also use the `.update` method, which assigns attributes from a Hash and saves changes in a single call:
+
+```ruby
+user = User.last
+user.update(email: 'foo-bar@platterz.ca')
+```
+
+For more examples: http://guides.rubyonrails.org/active_record_basics.html#update
+
+#### Deleting Records
+Deleting a record in pretty straight forward:
+
+```ruby
+user = User.last
+user.destroy
+```
+
+For more examples: http://guides.rubyonrails.org/active_record_basics.html#delete
+
 ## Step 1 - The Task Model
 If you're not familiar with MVC, or you want to know more about how Rails' models work,
 here's an excellent resource that covers their general purpose and functionality:
