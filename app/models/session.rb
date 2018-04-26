@@ -43,7 +43,7 @@ class Session < ApplicationRecord
   #
   # We define that the association is `optional` because we have our own logic that assigns it,
   # and Rails validates that `belongs_to` associations are not `nil` by default.
-  # See more: http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-belongs_to
+  # See more: http://guides.rubyonrails.org/association_basics.html#the-belongs-to-association
   belongs_to :user, optional: true
 
   # We require an email address and password to login. Here we define validates to ensure that
