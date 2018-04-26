@@ -75,7 +75,7 @@ If you're not familiar with MVC, or you want to know more about how Rails' model
 Here's an excellent resource that covers their general purpose and functionality:
 http://guides.rubyonrails.org/active_record_basics.html#what-is-active-record-questionmark
 
-### Using Generators
+### Using Model Generators
 For our Todo list, we want to represent each individual item in the list as a `Task`.
 Each Task should correlate to a record (or row) in the database, associated to the User that owns it.
 
@@ -199,3 +199,33 @@ In our Todo app, we want to keep track of when a Task is completed. To do this, 
 the `completed_at` attribute on the Task when `completed` becomes true.
 
 For some examples of callbacks in actions, take a look at `app/models/session.rb`.
+
+### Defining Factories for Models
+
+### Writing RSpecs (Unit Testing)
+
+## Step 2 - The Task Serializer
+
+### Using Serializer Generators
+
+## Step 3 - The Task Policy
+
+### Using Policy Generators
+
+### Permitted Actions
+
+### Permitted Attributes
+
+### Policy Scopes
+
+### Writing RSpecs
+
+## Step 4 - The Tasks Controller
+
+### Using Controller Generators
+
+### Defining Actions
+
+### Routing
+
+### Writing RSpecs
