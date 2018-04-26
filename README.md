@@ -72,7 +72,7 @@ To close the rails console, we can use `quit` or `exit`.
 
 ## Step 1 - The Task Model
 If you're not familiar with MVC, or you want to know more about how Rails' models work,
-Here's an excellent resource that covers their general purpose and functionality:
+here's an excellent resource that covers their general purpose and functionality:
 http://guides.rubyonrails.org/active_record_basics.html#what-is-active-record-questionmark
 
 ### Using Model Generators
