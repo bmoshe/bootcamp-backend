@@ -158,6 +158,8 @@ rails db:rollback
 
 This will rollback the last migration that was applied to the database.
 
+### Defining Associations
+
 ### Adding Data Validations
 Before starting, you might want to have a look at this guide about Rails validations:
 http://guides.rubyonrails.org/active_record_validations.html
