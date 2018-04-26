@@ -1,4 +1,4 @@
-# README
+# Bootcamp Project Backend - Todo List App
 
 ## Getting Started
 First things first, we need to install the dependencies for the Todo app.
