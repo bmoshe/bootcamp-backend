@@ -183,7 +183,7 @@ class Task < ApplicationRecord
 end
 ```
 
-Rails will automatically infer that this association is bound to the `user_id` attributes, and that it refers
+Rails will automatically infer that this association is bound to the `user_id` attribute, and that it refers
 to the `User` model.
 
 Similarly, it we wanted to define the inverse association, we would write:
