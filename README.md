@@ -286,7 +286,27 @@ by the `user` attribute in the `TaskSerializer`.
 
 For examples of serializers, take a look at others in `app/serializers`.
 
-## Step 3 - The Task Policy
+## Step 3 - The Tasks Controller
+
+The Frontend needs to be able to:
+ - View all of the User's Tasks
+ - Create a new Task
+ - Edit an existing Task
+ - Delete a Task
+
+### Using Controller Generators
+
+```bash
+rails g controller Tasks
+```
+
+### Defining Actions
+
+### Routing
+
+### Writing RSpecs
+
+## Step 4 - The Task Policy
 
 ### Using Policy Generators
 
@@ -299,19 +319,5 @@ rails g pundit:policy Task
 ### Permitted Attributes
 
 ### Policy Scopes
-
-### Writing RSpecs
-
-## Step 4 - The Tasks Controller
-
-### Using Controller Generators
-
-```bash
-rails g controller Tasks
-```
-
-### Defining Actions
-
-### Routing
 
 ### Writing RSpecs
