@@ -342,6 +342,20 @@ rails g controller Tasks
 ### Defining Actions
 
 ### Routing
+Once we have our controller in place, we need to tell Rails how to route requests to the methods in the controller.
+Rails' routing is described in detail by this guide:
+http://guides.rubyonrails.org/routing.html#the-purpose-of-the-rails-router
+
+In our case, we want to define a resource, which Rails has a convenient helper for:
+
+```ruby
+resources :tasks
+```
+
+**NOTE:** There's a difference between `resources` and `resource`. In our case, we want to use `resources`,
+because we're defining a plural (rather than a singular) resource.
+If you're interested in the difference, it's described in detail by this guide:
+http://guides.rubyonrails.org/routing.html#singular-resources
 
 ### Writing RSpecs
 
