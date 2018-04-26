@@ -77,7 +77,7 @@ TODO [Examples about creating, updating, and deleting Users]
 Models are also used to retrieve records from, and also to create and edit records in the database.
 Each instance of a model represents a single row that exists in the corresponding database table.
 
-In the starter code, we've already have a `User` model, which maps to the `users` table in the database.
+In the starter code, we already have a `User` model, which maps to the `users` table in the database.
 The model is found in `app/models/user.rb`.
 
 #### Querying the Database
