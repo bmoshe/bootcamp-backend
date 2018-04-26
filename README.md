@@ -70,6 +70,9 @@ ap User.all
 
 To close the rails console, we can use `quit` or `exit`.
 
+## Getting Familiar with Rails
+TODO [Examples about creating, updating, and deleting Users]
+
 ## Step 1 - The Task Model
 If you're not familiar with MVC, or you want to know more about how Rails' models work,
 here's an excellent resource that covers their general purpose and functionality:
