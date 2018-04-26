@@ -235,8 +235,8 @@ additional serialized attributes.
 
 ### Defining Serialized Attributes
 There are two types of entries we define in our serializer:
- - Attributes, which a simple fields like strings, integers, boolean, etc.
- - Associations, which refer to associated models.
+ 1. Attributes, which are simple fields like strings, integers, boolean, etc.
+ 2. Associations, which refer to associated models.
 
 There's two ways to define simple attributes. We can define them all at once using the `attributes` method.
 For example:
