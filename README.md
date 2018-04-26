@@ -329,5 +329,32 @@ rails g pundit:policy Task
 ## Step 5 - Wrapping Up
 
 ### Rubocop (The Linter)
+At Platterz, we use Rubocop as our linting tool for Ruby. If you're not familiar with linters or Rubocop, it
+automatically checks that code conforms to our style guide. This includes things like method length, class length,
+naming, whitespace and indentation, some Rails specific conventions, and general best practices.
+This isn't a catch-all solution, but it's a good base-line for what you should or should not do.
+
+To run Rubocop from your terminal, you can use:
+
+```bash
+rubocop
+```
+
+Rubocop can also automatically correct some violations (usually things related to whitespace and indentation).
+To automatically correct any style issues that are encountered, pass the `-a` flag:
+
+```bash
+rubocop -a
+```
+
+Rubocop also accepts file paths, so if we wanted to only clean up the `Task` model:
+
+```bash
+rubocop -a app/models/task.rb
+```
+
+Remember to look over any corrections that Rubocop does before you commit them! Sometimes, it may choose to
+indent or align things in some pretty wonky ways. If you're ever in doubt, poke someone about what Rubocop
+is telling you to do, and we'll steer you in the right direction.
 
 ## Bonus - User Sign Up
