@@ -290,6 +290,7 @@ For examples of serializers, take a look at others in `app/serializers`.
 
 The Frontend needs to be able to:
  - View all of the User's Tasks
+ - Fetch a specific Task, by its ID
  - Create a new Task
  - Edit an existing Task
  - Delete a Task
