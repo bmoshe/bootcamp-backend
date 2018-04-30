@@ -567,6 +567,41 @@ This generator creates the following files:
 ### Defining Actions
 
 #### Strong Parameters
+For the `create` and `update` actions, we'll need to accept parameters from the client. However, we can't trust
+that the client will send what we want them to! It's very important that we filter the parameters we receive,
+and only use those that we require. Otherwise, the use could overwrite attributes that we don't allow, or cause
+all sorts of unintended damages.
+
+Rails provides a mechanism for keeping inputs clean, called Strong Parameters. Here's a link we you can find
+more information on the subject:
+http://edgeguides.rubyonrails.org/action_controller_overview.html#strong-parameters
+
+In our case, we want the user to be able to set the `name` and `completed` flag on a Task, but we don't want
+them to be able to touch any of the others. To do this, we'd define a `task_params` method:
+
+```ruby
+def task_params
+  params.require(:task).permit(:name, :completed)
+end
+```
+
+The `.require(:task)` call we make tells Rails to verify that the incoming parameters includes a `task: {}` object.
+If it's missing, it'll throw an error, and that'll automatically be converted to an HTTP error code.
+Otherwise, it returns the contents of the `task: {}` object.
+
+Essentially, we're expecting the parameters to be wrapped in a `task` object, like so:
+
+```json
+{
+  "task": {
+    "name": "My Task",
+    "completed": true
+  }
+}
+```
+
+The `.require(...)` returns the object containing the `name` and `completed` fields, which we whitelist with the
+subsequent call to `.permit(...)`.
 
 #### Clean up with Callbacks
 
