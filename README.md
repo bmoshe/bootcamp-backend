@@ -368,7 +368,7 @@ end
 ```
 
 However, this will create every Task with the same name: 'My Task'. If we wanted to generate a random name
-everytime, we can use Faker:
+every time, we can use Faker:
 
 ```ruby
 factory :task do
