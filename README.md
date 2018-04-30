@@ -566,6 +566,10 @@ This generator creates the following files:
 
 ### Defining Actions
 
+#### Strong Parameters
+
+#### Clean up with Callbacks
+
 ### Routing
 Once we have our controller in place, we need to tell Rails how to route requests to the methods in the controller.
 Rails' routing is described in detail by this guide:
