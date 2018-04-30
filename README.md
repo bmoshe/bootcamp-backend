@@ -824,7 +824,7 @@ end
 ```
 
 **NOTE:** Don't be alarmed by `Scope < Scope`! The second one refers to a class with the same name defined on the
-parent class. You're essentially saying `class TaskPolicy::Scope < ApplicationPolicy::Scope`.
+parent class. It's essentially saying `class TaskPolicy::Scope < ApplicationPolicy::Scope`.
 
 This default `resolve` method is basically a no-op. It takes the input `scope` and returns it as-is. We want to
 make sure that Users only see their own Tasks. To do this, we would change this to:
