@@ -348,7 +348,7 @@ You can also look at the factories that are already defined in the starter code:
  - `spec/factories/sessions.rb`
 
 #### Writing Factories
-The Rails generator should have generated an empty factory for the `Task` model when we created it. By default,
+The Rails generator should have created an empty factory for the `Task` model when we created it. By default,
 it should look something like this:
 
 ```ruby
