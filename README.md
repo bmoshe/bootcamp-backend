@@ -81,6 +81,9 @@ In the starter code, we already have a `User` model, which maps to the `users` t
 The model is found in `app/models/user.rb`.
 
 #### Querying the Database
+Let's quickly run through some basic ways of querying the database. We'll do this by example.
+Say you wanted to fetch the first User in the database, or within some list of users. Rails provides a
+function called `.first` for our convenience.
 
 ```ruby
 user = User.first
@@ -89,15 +92,26 @@ user.password # => nil
 user.password_digest # => "$2a$10$..."
 ```
 
+If we wanted to fetch a specific User by their Primary Key (in most cases, the ID column), we use `.find(...)`.
+This fetches a specific record by its defined primary key, or throws an exception if it can't find the record.
+
 ```ruby
 User.find(1)    # => #<User id: 1, ...>
 User.find(1000) # => ActiveRecord::RecordNotFound: Couldn't find User with 'id'=1000
 ```
 
+Sometimes, we might want to find a User by a column other that the ID. The Rails function `.find_by(...)` accepts
+a Hash which contains columns and their associated values, and then tries to fetch a record that matches these
+specified constraints. Unlike `.find(...)`, this function returns `nil` if the record isn't found.
+
 ```ruby
 User.find_by(email: 'test@platterz.ca') # => #<User id: 1, ...>
 User.find_by(email: 'fake') # => nil
 ```
+
+If you wanted to match the behaviour of `.find(...)` and throw a error, the `.find_by!(...)` function behaves the
+same way as its normal counterpart `.find_by(...)`, but throws an error if no record is found matching the
+requested criteria.
 
 ```ruby
 User.find_by!(email: 'test@platterz.ca') # => #<User id: 1, ...>
