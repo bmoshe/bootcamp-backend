@@ -806,6 +806,49 @@ end
 The same applies to our `create` function.
 
 ### Policy Scopes
+Before we go into scopes, it's a good idea to dive into how the Rails query builder works. You can find details
+on it here: http://guides.rubyonrails.org/active_record_querying.html#retrieving-objects-from-the-database
+
+Scopes are what defines what list of records is visible to a particular User. Since it would be horribly inefficient
+to load every record in the database, and filter them with some function in memory, we need something to build a query
+that contains only records the User has access to. That's the job of the Policy Scope.
+
+The generator should've created a stub Scope for you already. It might look something like this:
+
+```ruby
+class Scope < Scope
+  def resolve
+    scope
+  end
+end
+```
+
+**NOTE:** Don't be alarmed by `Scope < Scope`! The second one refers to a class with the same name defined on the
+parent class. You're essentially saying `class TaskPolicy::Scope < ApplicationPolicy::Scope`.
+
+This default `resolve` method is basically a no-op. It takes the input `scope` and returns it as-is. We want to
+make sure that Users only see their own Tasks. To do this, we would change this to:
+
+```ruby
+def resolve
+  scope.where(user: current_user)
+end
+```
+
+Now we're reducing the Scope to only include Tasks that are owned by the current user. However, we can make this
+a little more efficient. If there's no current User (ie. the client isn't logged-in), this will still make a query
+`WHERE tasks.user_id IS NULL`. This query is unnecessary, since there shouldn't ever be Tasks without a User.
+To eliminate this unnecessary call:
+
+```ruby
+def resolve
+  return scope.none if current_user.nil?
+  scope.where(user: current_user)
+end
+```
+
+This `.none` method implements a Null-Object Design Pattern. It behaves like a normal query, but always returns an
+empty result without making an actual database call.
 
 ### Writing RSpecs
 
