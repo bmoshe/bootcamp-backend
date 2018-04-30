@@ -586,6 +586,25 @@ These correspond to specific HTTP verbs and URLs. Let's take Tasks for example:
 | PATCH | /tasks/:id | update |
 | DELETE | /tasks/:id | destroy |
 
+#### Rendering JSON
+In a traditional Rails App, controllers hand off data to views which render either HTML or XML using ERB.
+Stuff we don't really care about.
+Since we're an API, that's not going to work for us. Luckily, we (should) have already defined a serializer
+for out Task model, which will take care of the heavy lifting for us.
+
+All we need to do is tell the controller to call the serializer. All we need to do is call `render(...)` and
+pass the object we want to serialize under the `json` key of a Hash. For example:
+
+```ruby
+def show
+  @task = Task.find(params[:id])
+  render json: @task
+end
+```
+
+ActiveModelSerializers automatically hooks into Rails controllers and takes over from here. It'll look up a
+serializer based on the class of the parameter, convert it into JSON, and Rails will send that off to the client.
+
 #### Strong Parameters
 For the `create` and `update` actions, we'll need to accept parameters from the client. However, we can't trust
 that the client will send what we want them to! It's very important that we filter the parameters we receive,
