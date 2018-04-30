@@ -585,12 +585,23 @@ http://guides.rubyonrails.org/routing.html#singular-resources
 ### Writing RSpecs
 
 ## Step 4 - The Task Policy
+Pundit is a gem we use to manage authorization. It provides a framework for us to be able to control which users
+can take which actions, which records they're allowed to view and touch, and which attributes they're allowed to
+change.
+For more information about using Pundit, see:
+https://github.com/varvet/pundit
+
+You can also have a look at the policy we've already defined for Sessions in `app/policies/session_policy.rb`.
 
 ### Using Policy Generators
 
 ```bash
 rails g pundit:policy Task
 ```
+
+This generator creates the following files:
+ - `app/policies/task_policy.rb` which is the policy itself.
+ - `spec/policies/task_policy_spec.rb` is an RSpec file, where we define tests for the policy.
 
 ### Permitted Actions
 
