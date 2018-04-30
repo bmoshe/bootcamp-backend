@@ -337,6 +337,60 @@ For some examples of callbacks in action, take a look at `app/models/session.rb`
 ### Defining Factories for Models
 
 ### Writing RSpecs (Unit Testing)
+Before you start, you might want to read up on testing with RSpec:
+https://relishapp.com/rspec/rspec-core/v/3-7/docs/subject/explicit-subject
+https://relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
+
+You can also take a look at some of the existing model specs in:
+ - `spec/models/user_spec.rb`
+ - `spec/models/session_spec.rb`
+
+To run our entire RSpec suite, we use:
+
+```bash
+rspec
+```
+
+We can also run only specific folders or files:
+
+```bash
+rspec spec/controllers
+rspec spec/models/user_spec.rb
+```
+
+#### Verifying the Factory
+Since we use FactoryBot factories to generate testing data for our RSpecs, a good first step is to verify
+that the output of the factory is valid. We do this simply by saying:
+
+```ruby
+subject { build(:task) }
+
+it 'has a valid factory' do
+  should be_valid
+end
+```
+
+Here we're doing 2 things:
+ 1. Define the subject, which we'll also be using for our subsequent specs.
+ 2. Define an expectation that the subject is valid in its initial state.
+
+Before we go any further, we'll want to make sure our factory is valid according to our model's validations.
+We can do this by running our test suite, or just this specific file:
+
+```bash
+rspec spec/models/task_spec.rb
+```
+
+#### Writing our RSpecs
+In the model's RSpec file, we want to test any functionality that we defined on the model.
+This includes:
+ - Validations that we've defined: We want to make sure they catch invalid inputs and allow valid inputs.
+ - Callbacks that we're using: Make sure that they're triggered when they should be and have the right effects.
+ - Scope that we've defined: Ensure that they include the records we want, and exclude the records we don't.
+ - Any public methods we've added: They need to do what we expect them to.
+
+It's important that we only test what our model is doing! It's easy to get carried away and start testing code
+that our model calls or relies on. In general, that's an antipattern.
 
 ## Step 2 - The Task Serializer
 To send information to our Frontend, we'll need to serialize it into a format the Frontend can understand.
