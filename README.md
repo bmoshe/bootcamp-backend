@@ -358,7 +358,7 @@ FactoryBot.define do
 end
 ```
 
-Inside of this factory block, we define how we want attributes on the model to be initialized when we called
+Inside of this factory block, we define how we want attributes on the model to be initialized when we call
 the factory. For example, if we wanted every Task to be created with a name, we can do:
 
 ```ruby
