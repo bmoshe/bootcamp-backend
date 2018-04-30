@@ -566,6 +566,26 @@ This generator creates the following files:
 
 ### Defining Actions
 
+As an API, we have 5 basic actions that we care about:
+
+| Name | Description |
+| ---- | ----------- |
+| index | Get a list of items. For example, get a list of all Users. |
+| show | Fetch a specific item, by ID. |
+| create | Create a new item. |
+| update | Edit an existing item. |
+| destroy | Delete an existing item. |
+
+These correspond to specific HTTP verbs and URLs. Let's take Tasks for example:
+
+| Verb | Path | Action |
+| ---- | ---- | ------ |
+| GET  | /tasks | index |
+| GET  | /tasks/:id | show |
+| POST | /tasks | create |
+| PATCH | /tasks/:id | update |
+| DELETE | /tasks/:id | destroy |
+
 #### Strong Parameters
 For the `create` and `update` actions, we'll need to accept parameters from the client. However, we can't trust
 that the client will send what we want them to! It's very important that we filter the parameters we receive,
