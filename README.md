@@ -604,8 +604,106 @@ This generator creates the following files:
  - `spec/policies/task_policy_spec.rb` is an RSpec file, where we define tests for the policy.
 
 ### Permitted Actions
+Actions in policies correspond to actions in the controller. For example, if you wanted to control whether a
+User is allowed to edit Tasks, you'd define an `update?` method in your policy, which would be called by the
+`update` method in your controller.
+
+Let's say we wanted to let Users edit their own tasks. We'd want to verify two things:
+ 1. There is a logged-in User.
+ 2. The User that owns the Task matches the current User.
+
+We could do this by writing:
+
+```ruby
+def update?
+  current_user.present? && current_user == record.current_user
+end
+```
+
+In a policy, the `current_user` attribute refers to the User that is currently logged in (it's automatically
+passed in from the controller), and `record` refers to the record that you're checking authorization for.
+In the case of `update?`, this would be the Task the current user is trying to edit.
+
+Since `record` is a little ambiguous, we can add an alias to improve readability. At the top of the policy,
+add:
+
+```ruby
+class TaskPolicy < ApplicationPolicy
+  alias task record
+  ...
+end
+```
+
+Now we can rewrite our `update?` method as:
+
+```ruby
+def update?
+  current_user.present? && current_user == task.current_user
+end
+```
+
+To call the policy in a controller, we use `authorize(...)`. For example:
+
+```ruby
+def update
+  authorize(@task)
+  @task.update!(task_params)
+  render json: @task
+end
+```
+
+The `.authorize(...)` method accepts a model, looks up the policy for it, and calls the appropriate method
+to verify that the current action is permitted. If the policy returns `false`, an exception is thrown,
+and the API will automatically return an HTTP error code.
+
+Since `.authorize(...)` uses exceptions to enforce authorization, it just returns the input parameter upon
+success. This makes it convenient for chaining calls together:
+
+```ruby
+def update
+  authorize(@task).update!(task_params)
+  render json: @task
+end
+```
 
 ### Permitted Attributes
+Policies are also responsible for defining which attributes the client is allowed to change on the model.
+We do this using the `permitted_attributes` method, which returns an array of attributes that are whitelisted.
+For example, if we wanted to allow the User to set the `name` on a Task, we'd write:
+
+```ruby
+def permitted_attributes
+  %i[name]
+end
+```
+
+We're also able to set which attributes are allowed, based on which action is being taken. For example,
+let's say we want to allow just the name during creation, but also allow the `completed` flag during edits:
+
+```ruby
+def permitted_attributes_for_create
+  %i[name]
+end
+
+def permitted_attributes_for_update
+  %i[name completed]
+end
+```
+
+Now that we've defined our permitted attributes, the next step is to use them from the controller. We do this
+with the `permitted_attributes(...)` method. It takes a model and automatically looks up the policy, fetches
+the list of attributes permitted for the current action, and filters the incoming parameters.
+
+This means we can get rid of our `task_params` function, and instead do:
+
+```ruby
+def update
+  authorize(@task).update!(permitted_attributes(Task))
+  render json: @task
+end
+```
+
+The same applies to our `create` function.
 
 ### Policy Scopes
 
