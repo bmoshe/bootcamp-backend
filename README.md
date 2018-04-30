@@ -623,6 +623,29 @@ The `.require(...)` returns the object containing the `name` and `completed` fie
 subsequent call to `.permit(...)`.
 
 #### Clean up with Callbacks
+Much like models, controllers support callbacks that allow us to automatically call methods at specific points in
+time. Rails refers to callbacks in controllers as 'Filters'. You can read more about them here:
+http://guides.rubyonrails.org/action_controller_overview.html#filters
+
+In our case, we can use them to clean up a bit of duplicated set up logic. The `show`, `update`, and `destroy`
+actions refer to a specific resource, (ie. they're called on a specific Task), so we can pull out the logic
+that loads that Task from the DB.
+
+To do this, we write:
+
+```ruby
+class TasksController < ApplicationController
+  before_action :set_task, only: %i[show update destroy]
+
+  ...
+
+  def set_task
+    @task = Task.find(params[:id])
+  end
+end
+```
+
+Now we have a `@task` instance variable predefined for all of these actions!
 
 ### Routing
 Once we have our controller in place, we need to tell Rails how to route requests to the methods in the controller.
