@@ -589,8 +589,7 @@ These correspond to specific HTTP verbs and URLs. Let's take Tasks for example:
 #### Strong Parameters
 For the `create` and `update` actions, we'll need to accept parameters from the client. However, we can't trust
 that the client will send what we want them to! It's very important that we filter the parameters we receive,
-and only use those that we require. Otherwise, the use could overwrite attributes that we don't allow, or cause
-all sorts of unintended damages.
+and only use those that we require.
 
 Rails provides a mechanism for keeping inputs clean, called Strong Parameters. Here's a link we you can find
 more information on the subject:
