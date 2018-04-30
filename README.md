@@ -335,6 +335,76 @@ the `completed_at` attribute on the Task when `completed` becomes true.
 For some examples of callbacks in action, take a look at `app/models/session.rb`.
 
 ### Defining Factories for Models
+We use a gem called FactoryBot to create data for use during testing. We define factories that contain information
+about how to construct instances of a particular model. You can read more about FactoryBot here:
+https://github.com/thoughtbot/factory_bot
+
+We also use a gem called Faker to create fake data. It generates things like fake names, passwords, email addresses,
+phone numbers, etc. You can find the documentation for it here:
+https://github.com/stympy/faker
+
+You can also look at the factories that are already defined in the starter code:
+ - `spec/factories/users.rb`
+ - `spec/factories/sessions.rb`
+
+#### Writing Factories
+The Rails generator should have generated an empty factory for the `Task` model when we created it. By default,
+it should look something like this:
+
+```ruby
+FactoryBot.define do
+  factory :task do
+  end
+end
+```
+
+Inside of this factory block, we define how we want attributes on the model to be initialized when we called
+the factory. For example, if we wanted every Task to be created with a name, we can do:
+
+```ruby
+factory :task do
+  name 'My Task'
+end
+```
+
+However, this will create every Task with the same name: 'My Task'. If we wanted to generate a random name
+everytime, we can use Faker:
+
+```ruby
+factory :task do
+  name { Faker::Hipster.sentence }
+end
+```
+
+**NOTE:** See the curly braces around the call to Faker? That tells FactoryBot to evaluate the block every time
+the factory is called. Without them, Faker would be called when the factory is first loaded, and the result
+would be baked-in to the factory. So, we'd have the same name every time!
+
+#### Using Factories in the Console
+If you open up the Rails console, you can call any of these factories through FactoryBot. It provides a couple
+of methods that we care about in particular. The `.build(...)` method constructs a new instance of a model without
+saving it to the database:
+
+```ruby
+FactoryBot.build(:user) # => #<User id: nil, email: "legros_2_kennedy_ms@haag.co", ...>
+FactoryBot.build(:user, email: 'test@platterz.ca') # => #<User id: nil, email: "test@platterz.ca", ...>
+```
+
+It also provides a `.create(...)` function that behaves like `.build(...)`, but also saves the record to the database
+by calling `.save!`. If saving the record fails (ie. there's a validation error), it will throw an error.
+
+```ruby
+FactoryBot.create(:user) # => #<User id: 1, email: "legros_2_kennedy_ms@haag.co", ...>
+FactoryBot.create(:user, email: 'test@platterz.ca') # => #<User id: 2, email: "test@platterz.ca", ...>
+FactoryBot.create(:user, email: '') # => ActiveRecord::RecordInvalid: Validation failed: Email can't be blank
+```
+
+Finally, it provides a function called `.attributes_for(...)` which returns a Hash containing the attributes that
+would be passed to the model when creating it. We'll use this later when testing controllers:
+
+```ruby
+FactoryBot.attributes_for(:user) # => {:email=>"3.dds.clare.balistreri@okuneva.org", :password=>"4h2gTpEfOcJp960b"}
+```
 
 ### Writing RSpecs (Unit Testing)
 Before you start, you might want to read up on testing with RSpec:
@@ -373,6 +443,9 @@ end
 Here we're doing 2 things:
  1. Define the subject, which we'll also be using for our subsequent specs.
  2. Define an expectation that the subject is valid in its initial state.
+
+**NOTE:** When calling factories from RSpec, we don't need to explicitly use the `FactoryBot` namespace.
+So, instead of calling `FactoryBot.build(:task)` we can just say `build(:task)`.
 
 Before we go any further, we'll want to make sure our factory is valid according to our model's validations.
 We can do this by running our test suite, or just this specific file:
