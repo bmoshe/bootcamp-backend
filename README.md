@@ -130,10 +130,25 @@ user = User.new(email: 'foo@bar.ca', password: 'password')
 user.save # => true
 ```
 
+The `.save` method runs validations on the model, and then saves it to the database. If either part of the process
+fails, it returns `false`. You can also use the `.save!` method, which behaves similarly, but raises an error instead
+of returning a flag.
+
+```ruby
+user = User.new(email: '', password: 'password')
+user.save! # => ActiveRecord::RecordInvalid: Validation failed: Email can't be blank
+```
+
 We can also use the `.create` method, which encapsulates both construction and saving the record in single call:
 
 ```ruby
 user = User.create(email: 'foo@bar.ca', password: 'password')
+```
+
+Similarly, we also have access to `.create!`, which raises an error if the create action fails:
+
+```ruby
+User.create!(email: '', password: 'password') # => ActiveRecord::RecordInvalid: Validation failed: Email can't be blank
 ```
 
 For more examples: http://guides.rubyonrails.org/active_record_basics.html#create
@@ -155,6 +170,13 @@ user = User.last
 user.update(email: 'foo-bar@platterz.ca')
 ```
 
+Similarly, we also have access to `.update!`, which raises an error if the update action fails:
+
+```ruby
+user = User.last
+user.update!(email: '') # => ActiveRecord::RecordInvalid: Validation failed: Email can't be blank
+```
+
 For more examples: http://guides.rubyonrails.org/active_record_basics.html#update
 
 #### Deleting Records
@@ -163,6 +185,13 @@ Deleting a record in pretty straight forward:
 ```ruby
 user = User.last
 user.destroy
+```
+
+There's also the option to use `.destroy!`, which behaves like normal, but raises an error is the action fails:
+
+```ruby
+user = User.last
+user.destroy!
 ```
 
 For more examples: http://guides.rubyonrails.org/active_record_basics.html#delete
