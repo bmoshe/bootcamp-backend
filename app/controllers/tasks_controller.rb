@@ -4,28 +4,29 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show update destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = policy_scope(Task)
     render json: @tasks
   end
 
   def show
+    authorize(@task)
     render json: @task
   end
 
   def create
-    @task = Task.create!(task_params) do |task|
+    @task = authorize(Task).create!(task_params) do |task|
       task.user = current_user
     end
     render json: @task, status: :created
   end
 
   def update
-    @task.update!(task_params)
+    authorize(@task).update!(task_params)
     render json: @task
   end
 
   def destroy
-    @task.destroy!
+    authorize(@task).destroy!
   end
 
 private
