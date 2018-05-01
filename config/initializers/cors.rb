@@ -8,7 +8,7 @@
 
 Rails.application.config.middleware.insert_before(0, Rack::Cors) do
   allow do
-    origins 'example.com'
+    origins '*' # Allow requests from everywhere, otherwise this just won't work
     resource '*', headers: :any,
                   methods: %i[get post put patch delete options]
   end
