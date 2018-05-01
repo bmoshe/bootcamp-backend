@@ -682,6 +682,12 @@ because we're defining a plural (rather than a singular) resource.
 If you're interested in the difference, it's described in detail by this guide:
 http://guides.rubyonrails.org/routing.html#singular-resources
 
+To view all of the routes currently in our app, we can run:
+
+```bash
+rails routes
+```
+
 ### Writing RSpecs
 
 ## Step 4 - The Task Policy
