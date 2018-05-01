@@ -71,7 +71,7 @@ ap User.all
 To close the rails console, we can use `quit` or `exit`.
 
 ## Getting Familiar with Rails
-TODO [Examples about creating, updating, and deleting Users]
+Before we really start writing our own code, lets get familiar with some of the common functions in Rails.
 
 ### Models
 Models are also used to retrieve records from, and also to create and edit records in the database.
