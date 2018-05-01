@@ -71,7 +71,7 @@ ap User.all
 To close the rails console, we can use `quit` or `exit`.
 
 ## Getting Familiar with Rails
-TODO [Examples about creating, updating, and deleting Users]
+Before we really start writing our own code, lets get familiar with some of the common functions in Rails.
 
 ### Models
 Models are also used to retrieve records from, and also to create and edit records in the database.
@@ -130,10 +130,25 @@ user = User.new(email: 'foo@bar.ca', password: 'password')
 user.save # => true
 ```
 
+The `.save` method runs validations on the model, and then saves it to the database. If either part of the process
+fails, it returns `false`. You can also use the `.save!` method, which behaves similarly, but raises an error instead
+of returning a flag.
+
+```ruby
+user = User.new(email: '', password: 'password')
+user.save! # => ActiveRecord::RecordInvalid: Validation failed: Email can't be blank
+```
+
 We can also use the `.create` method, which encapsulates both construction and saving the record in single call:
 
 ```ruby
 user = User.create(email: 'foo@bar.ca', password: 'password')
+```
+
+Similarly, we also have access to `.create!`, which raises an error if the create action fails:
+
+```ruby
+User.create!(email: '', password: 'password') # => ActiveRecord::RecordInvalid: Validation failed: Email can't be blank
 ```
 
 For more examples: http://guides.rubyonrails.org/active_record_basics.html#create
@@ -155,6 +170,13 @@ user = User.last
 user.update(email: 'foo-bar@platterz.ca')
 ```
 
+Similarly, we also have access to `.update!`, which raises an error if the update action fails:
+
+```ruby
+user = User.last
+user.update!(email: '') # => ActiveRecord::RecordInvalid: Validation failed: Email can't be blank
+```
+
 For more examples: http://guides.rubyonrails.org/active_record_basics.html#update
 
 #### Deleting Records
@@ -163,6 +185,13 @@ Deleting a record in pretty straight forward:
 ```ruby
 user = User.last
 user.destroy
+```
+
+There's also the option to use `.destroy!`, which behaves like normal, but raises an error is the action fails:
+
+```ruby
+user = User.last
+user.destroy!
 ```
 
 For more examples: http://guides.rubyonrails.org/active_record_basics.html#delete
@@ -546,6 +575,11 @@ by the `user` attribute in the `TaskSerializer`.
 For examples of serializers, take a look at others in `app/serializers`.
 
 ## Step 3 - The Tasks Controller
+Before we start, you can read more about Rails controllers here:
+http://guides.rubyonrails.org/action_controller_overview.html#what-does-a-controller-do-questionmark
+
+Controllers are the part of our system that receives incoming requests from the client, and dispatches method calls
+into our codebase. They serve as the interface which the client can call, almost as if it were calling a function.
 
 The Frontend needs to be able to:
  - View all of the User's Tasks
@@ -554,17 +588,26 @@ The Frontend needs to be able to:
  - Edit an existing Task
  - Delete a Task
 
+These actions will be performed by the controller, which will also be responsible for deciding what the client
+receives as a response, once the actions are complete.
+
 ### Using Controller Generators
+To get started, we'll be using Rails' generators to scaffold our controller. To generate a new controller, we write:
 
 ```bash
 rails g controller Tasks
 ```
+
+**NOTE:** Controller names are plural! A controller represents the entire collection of a particular resource
+(ie. In our case, all of the Tasks that exist in the system), and Rails expects them to have a pluralized name
+in order to be able to route calls to them correctly.
 
 This generator creates the following files:
  - `app/controllers/tasks_controller.rb` which is the actual controller.
  - `spec/controllers/tasks_controller_spec.rb` is an RSpec file, where we define tests for the controller.
 
 ### Defining Actions
+Controller actions represent methods that the client is able to remotely call.
 
 As an API, we have 5 basic actions that we care about:
 
@@ -666,6 +709,19 @@ end
 
 Now we have a `@task` instance variable predefined for all of these actions!
 
+#### Error Handling
+Our `ApplicationController` (the base class for all our controllers) already implements interceptors that catch
+exceptions and gracefully render error messages or status codes back to the client.
+
+Currently, it's set up to handle:
+ - `ActiveRecord::RecordNotFound`
+ - `ActiveRecord::RecordInvalid`
+ - `ActiveRecord::RecordNotSaved`
+ - `ActiveRecord::RecordNotDestroyed`
+
+Have a look at what throws these exceptions in Rails, and how you can leverage those systems to use the error handling
+we already have in place.
+
 ### Routing
 Once we have our controller in place, we need to tell Rails how to route requests to the methods in the controller.
 Rails' routing is described in detail by this guide:
@@ -682,7 +738,15 @@ because we're defining a plural (rather than a singular) resource.
 If you're interested in the difference, it's described in detail by this guide:
 http://guides.rubyonrails.org/routing.html#singular-resources
 
+To view all of the routes currently in our app, we can run:
+
+```bash
+rails routes
+```
+
 ### Writing RSpecs
+There's already specs for the `SessionsController`, which might be useful as a reference when writing tests for your
+own controller. You can find them in `spec/controllers/sessions_controller_spec.rb`.
 
 ## Step 4 - The Task Policy
 Pundit is a gem we use to manage authorization. It provides a framework for us to be able to control which users
@@ -851,6 +915,8 @@ This `.none` method implements a Null-Object Design Pattern. It behaves like a n
 empty result without making an actual database call.
 
 ### Writing RSpecs
+For an example of how to write specs for a Policy, take a look at the specs we already have for the `SessionPolicy`.
+They can be found in `spec/policies/session_policy_spec.rb`.
 
 ## Step 5 - Wrapping Up
 
@@ -884,3 +950,5 @@ it may choose to indent or align things in some pretty wonky ways. If you're eve
 poke someone about what Rubocop is telling you to do, and we'll steer you in the right direction.
 
 ## Bonus - User Sign Up
+As an optional bonus, use what you've learned to implement a User sign-up flow.
+You can also allow Users to edit their profile.

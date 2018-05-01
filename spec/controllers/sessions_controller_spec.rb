@@ -23,9 +23,12 @@
 require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
-  let!(:current_session) { create(:session) }
+  let(:current_user) { create(:user) }
+  let(:current_session) { create(:session, user: current_user) }
 
   before(:each) do
+    # The Session-Token header is what controls which user is logged-in.
+    # This is implemented in `app/controllers/application_controller.rb`.
     request.headers['Session-Token'] = current_session.token
   end
 
@@ -40,6 +43,8 @@ RSpec.describe SessionsController, type: :controller do
     let(:user) { create(:user) }
 
     before(:each) do
+      # Clear the Session-Token header.
+      # This logs the current User out.
       request.headers['Session-Token'] = nil
     end
 
