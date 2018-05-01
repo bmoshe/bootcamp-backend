@@ -546,6 +546,11 @@ by the `user` attribute in the `TaskSerializer`.
 For examples of serializers, take a look at others in `app/serializers`.
 
 ## Step 3 - The Tasks Controller
+Before we start, you can read more about Rails controllers here:
+http://guides.rubyonrails.org/action_controller_overview.html#what-does-a-controller-do-questionmark
+
+Controllers are the part of our system that receives incoming requests from the client, and dispatches method calls
+into our codebase. They serve as the interface which the client can call, almost as if it were calling a function.
 
 The Frontend needs to be able to:
  - View all of the User's Tasks
@@ -554,17 +559,26 @@ The Frontend needs to be able to:
  - Edit an existing Task
  - Delete a Task
 
+These actions will be performed by the controller, which will also be responsible for deciding what the client
+receives as a response, once the actions are complete.
+
 ### Using Controller Generators
+To get started, we'll be using Rails' generators to scaffold our controller. To generate a new controller, we write:
 
 ```bash
 rails g controller Tasks
 ```
+
+**NOTE:** Controller names are plural! A controller represents the entire collection of a particular resource
+(ie. In our case, all of the Tasks that exist in the system), and Rails expects them to have a pluralized name
+in order to be able to route calls to them correctly.
 
 This generator creates the following files:
  - `app/controllers/tasks_controller.rb` which is the actual controller.
  - `spec/controllers/tasks_controller_spec.rb` is an RSpec file, where we define tests for the controller.
 
 ### Defining Actions
+Controller actions represent methods that the client is able to remotely call.
 
 As an API, we have 5 basic actions that we care about:
 
@@ -689,6 +703,8 @@ rails routes
 ```
 
 ### Writing RSpecs
+There's already specs for the `SessionsController`, which might be useful as a reference when writing tests for your
+own controller. You can find them in `spec/controllers/sessions_controller_spec.rb`.
 
 ## Step 4 - The Task Policy
 Pundit is a gem we use to manage authorization. It provides a framework for us to be able to control which users
@@ -857,6 +873,8 @@ This `.none` method implements a Null-Object Design Pattern. It behaves like a n
 empty result without making an actual database call.
 
 ### Writing RSpecs
+For an example of how to write specs for a Policy, take a look at the specs we already have for the `SessionPolicy`.
+They can be found in `spec/policies/session_policy_spec.rb`.
 
 ## Step 5 - Wrapping Up
 
