@@ -680,6 +680,19 @@ end
 
 Now we have a `@task` instance variable predefined for all of these actions!
 
+#### Error Handling
+Our `ApplicationController` (the base class for all our controllers) already implements interceptors that catch
+exceptions and gracefully render error messages or status codes back to the client.
+
+Currently, it's set up to handle:
+ - `ActiveRecord::RecordNotFound`
+ - `ActiveRecord::RecordInvalid`
+ - `ActiveRecord::RecordNotSaved`
+ - `ActiveRecord::RecordNotDestroyed`
+
+Have a look at what throws these exceptions in Rails, and how you can leverage those systems to use the error handling
+we already have in place.
+
 ### Routing
 Once we have our controller in place, we need to tell Rails how to route requests to the methods in the controller.
 Rails' routing is described in detail by this guide:
