@@ -908,3 +908,5 @@ it may choose to indent or align things in some pretty wonky ways. If you're eve
 poke someone about what Rubocop is telling you to do, and we'll steer you in the right direction.
 
 ## Bonus - User Sign Up
+As an optional bonus, use what you've learned to implement a User sign-up flow.
+You can also allow Users to edit their profile.
