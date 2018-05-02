@@ -727,6 +727,7 @@ Once we have our controller in place, we need to tell Rails how to route request
 Rails' routing is described in detail by this guide:
 http://guides.rubyonrails.org/routing.html#the-purpose-of-the-rails-router
 
+Routes are defined in `config/routes.rb`.
 In our case, we want to define a resource, which Rails has a convenient helper for:
 
 ```ruby
