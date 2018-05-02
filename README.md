@@ -346,7 +346,8 @@ As examples for this task, feel free to look at the validations in `app/models/u
 For more information about callbacks, there's information available in this guide:
 http://guides.rubyonrails.org/active_record_callbacks.html
 
-We'll also need Rails' change tracking in this section, which you can read more about here:
+ActiveRecord models keep track of which attributes have been changed. This is useful for triggering code to run when
+specific changes on the model happen. To read more about the Rails change tracking mechanism, it's documented here:
 http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
 
 For certain actions, we need to include additional side-effects that are applied to the model.
