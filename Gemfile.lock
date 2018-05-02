@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/varvet/pundit.git
-  revision: 001d3fc16d8fc7e2e8500c668792d1a2b8ee8d44
+  revision: d17265277c171ba7384b6b9250afc6f7e1faea93
   specs:
     pundit (1.1.0)
       activesupport (>= 3.0.0)
@@ -143,6 +143,7 @@ GEM
     rspec-expectations (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
+    rspec-json_expectations (2.1.0)
     rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.7.0)
@@ -195,6 +196,7 @@ DEPENDENCIES
   pundit!
   rack-cors
   rails (~> 5.2.0)
+  rspec-json_expectations
   rspec-rails
   spring
   spring-watcher-listen (~> 2.0.0)

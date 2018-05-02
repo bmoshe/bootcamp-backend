@@ -36,6 +36,7 @@ RSpec.describe SessionsController, type: :controller do
     it 'returns http success' do
       get :show
       expect(response).to have_http_status(:ok)
+      expect(response.body).to include_json(session: { token: current_session.token })
     end
   end
 
@@ -52,6 +53,7 @@ RSpec.describe SessionsController, type: :controller do
       expect do
         post :create, params: { session: { email: user.email, password: user.password } }
         expect(response).to have_http_status(:created)
+        expect(response.body).to include_json(session: { user_id: user.id })
       end.to change { Session.count }.by(1)
     end
   end
@@ -61,6 +63,7 @@ RSpec.describe SessionsController, type: :controller do
       expect do
         delete :destroy
         expect(response).to have_http_status(:no_content)
+        expect(response.body).to be_empty
       end.to change { Session.count }.by(-1)
     end
   end
