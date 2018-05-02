@@ -11,8 +11,12 @@ class ApplicationController < ActionController::API
     head current_user.nil? ? :unauthorized : :forbidden
   end
 
+  rescue_from(ActiveRecord::RecordNotFound) do |error|
+    render json: { errors: { (error.model || 'Object') => ['not found'] } }, status: :not_found
+  end
+
   rescue_from(ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved, ActiveRecord::RecordNotDestroyed) do |error|
-    render json: { errors: [error.record.errors] }, status: :unprocessable_entity
+    render json: { errors: error.record.errors }, status: :unprocessable_entity
   end
 
   # This is the app's authentication logic. It tries to fetch an active Session using a secure token.
