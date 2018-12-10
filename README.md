@@ -804,7 +804,7 @@ Now we can rewrite our `update?` method as:
 
 ```ruby
 def update?
-  current_user.present? && current_user == task.current_user
+  current_user.present? && current_user == task.user
 end
 ```
 
