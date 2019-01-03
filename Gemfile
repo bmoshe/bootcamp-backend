@@ -11,7 +11,7 @@ gem 'pg'
 gem 'puma'
 gem 'pundit', git: 'https://github.com/varvet/pundit.git'
 gem 'rack-cors'
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 5.2.1'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development do

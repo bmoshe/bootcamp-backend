@@ -201,6 +201,10 @@ If you're not familiar with MVC, or you want to know more about how Rails' model
 here's an excellent resource that covers their general purpose and functionality:
 http://guides.rubyonrails.org/active_record_basics.html#what-is-active-record-questionmark
 
+Also, there's a few models already defined for you in the starter code, which will help with
+authentication and user management. You can find whem in the `app/models/` directory.
+They can also be helpful as a visual reference for what models look like, and how they're structured.
+
 ### Using Model Generators
 For our Todo list, we want to represent each individual item in the list as a `Task`.
 Each Task should correlate to a record (or row) in the database, associated to the User that owns it.
