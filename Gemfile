@@ -28,6 +28,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'rspec-rails'
   gem 'rspec-json_expectations'
+  gem 'rspec-rails'
 end
