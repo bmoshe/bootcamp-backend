@@ -1,4 +1,15 @@
 # Bootcamp Project Backend - Todo List App
+In this project, we're going to be building a small web-app that keeps track of tasks for a TODO list.
+The backend project will provide an API that will be consumed by the frontend.
+
+Users of our app will be able to:
+ - Log in and out
+ - Create tasks for their TODO list
+ - Edit and delete tasks in their list
+ - Mark tasks as completed
+
+For each task, we'll be keeping track of when it was created, and if and when it was marked completed.
+The authentication mechanism (logging in and out) is already provided for you.
 
 ## Getting Started
 First things first, we need to install the dependencies for the Todo app.
