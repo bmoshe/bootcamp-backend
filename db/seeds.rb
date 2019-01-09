@@ -13,3 +13,16 @@
 User.find_or_create_by!(email: 'test@platterz.ca') do |user|
   user.password = 'password'
 end
+
+# Here we create some Tags for the system to use.
+# They're stored in the database, and will be made available to the frontend.
+%w[
+  blocking
+  fun
+  important
+  personal
+  ponies
+  urgent
+].each do |name|
+  Tag.find_or_create_by!(name: name)
+end
