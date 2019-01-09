@@ -279,7 +279,7 @@ Here's a checklist of things that you should've covered by the time you've finis
 - [ ] Moved common logic between actions into callbacks.
 - [ ] Write RSpecs for `TaskListsController` and `TasksController`.
 
-(Yep, this chapter's pretty short.)
+(Checked off everything on the list? Looks like you're in control of the situation.)
 
 | [&larr; Chapter 2](./Chapter%202%20-%20Serializers.md) | [Back to Intro](../README.md) | [Chapter 4 &rarr;](./Chapter%204%20-%20Policies.md) |
 | --:| --:| --: |
