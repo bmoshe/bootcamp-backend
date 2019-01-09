@@ -1,4 +1,6 @@
-# Step 1 - The Task and TaskList Models
+# Chapter 1 - The Task and TaskList Models
+Models are M in MVC. They're the primary way of interacting with data in the database.
+
 If you're not familiar with MVC, or you want to know more about how Rails' models work,
 here's an excellent resource that covers their general purpose and functionality:
 http://guides.rubyonrails.org/active_record_basics.html#what-is-active-record-questionmark
