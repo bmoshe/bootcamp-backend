@@ -81,6 +81,12 @@ For examples of serializers, take a look at others in `app/serializers`.
 **NOTE**: Remember to define serializers for both the `Task` and `TaskList` models.
 
 # Chapter 2 - Checklist
+Here's a checklist of things that you should've covered by the time you've finished with this chapter:
+
+- [ ] Create a `TaskSerializer` and a `TaskListSerializer`.
+- [ ] Add necessary attributes associations to the serializers.
+
+(If only we had a TODO list app we could put these in!)
 
 | [&larr; Chapter 1](./Chapter%201%20-%20Models.md) | [Back to Intro](../README.md) | [Chapter 3 &rarr;](./Chapter%203%20-%20Controllers.md) |
 | --:| --:| --: |
