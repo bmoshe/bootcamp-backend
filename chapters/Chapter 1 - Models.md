@@ -331,7 +331,7 @@ We can do this by running our test suite, or just a specific file:
 rspec spec/models/task_spec.rb
 ```
 
-### Writing our RSpecs
+### Writing RSpecs
 In the model's RSpec file, we want to test any functionality that we defined on the model.
 This includes:
  - Validations that we've defined: We want to make sure they catch invalid inputs and allow valid inputs.
@@ -347,9 +347,9 @@ that our model calls or relies on. In general, that's an antipattern.
 # Chapter 1 - Checklist
 Here's a checklist of things that you should've covered by the time you've finished with this chapter:
 
-[ ] Create your `Task` and `TaskList` models.
-[ ] Add data validations to `Task` and `TaskList`.
-[ ] Add associations between `User`, `TaskList`, and `Task`.
-[ ] Implement handling for `completed` and `completed_at` on `Task` using callbacks.
-[ ] Create factories for `Task` and `TaskList`.
-[ ] Write RSpecs for `Task` and `TaskList`.
+- [ ] Create your `Task` and `TaskList` models.
+- [ ] Add data validations to `Task` and `TaskList`.
+- [ ] Add associations between `User`, `TaskList`, and `Task`.
+- [ ] Implement handling for `completed` and `completed_at` on `Task` using callbacks.
+- [ ] Create factories for `Task` and `TaskList`.
+- [ ] Write RSpecs for `Task` and `TaskList`.
