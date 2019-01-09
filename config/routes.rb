@@ -5,4 +5,6 @@ Rails.application.routes.draw do
 
   resource :session, only: %i[show create destroy]
   resources :tags, only: :index
+
+  post '/graphql', to: 'graphql#execute'
 end

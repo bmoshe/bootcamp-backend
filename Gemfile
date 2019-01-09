@@ -6,6 +6,7 @@ gem 'active_model_serializers'
 gem 'awesome_print'
 gem 'bcrypt'
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'graphql'
 gem 'oj'
 gem 'pg'
 gem 'puma'

@@ -80,6 +80,7 @@ GEM
     ffi (1.9.23)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    graphql (1.8.4)
     i18n (1.4.0)
       concurrent-ruby (~> 1.0)
     jsonapi-renderer (0.2.0)
@@ -189,6 +190,7 @@ DEPENDENCIES
   byebug
   factory_bot_rails
   faker
+  graphql
   listen (>= 3.0.5, < 3.2)
   oj
   pg
