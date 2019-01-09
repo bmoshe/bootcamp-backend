@@ -83,3 +83,4 @@ For examples of serializers, take a look at others in `app/serializers`.
 # Chapter 2 - Checklist
 
 | [&larr; Chapter 1](./Chapter%201%20-%20Models.md) | [Back to Intro](../README.md) | [Chapter 3 &rarr;](./Chapter%203%20-%20Controllers.md) |
+| --:| --:| --: |
