@@ -1,15 +1,18 @@
 # Bootcamp Project Backend - Todo List App
 In this project, we're going to be building a small web-app that keeps track of tasks for a TODO list.
+We're going to allow the user to create multiple seperate lists (which we call task lists), to stay organized.
 The backend project will provide an API that will be consumed by the frontend.
 
 Users of our app will be able to:
  - Log in and out
- - Create tasks for their TODO list
- - Edit and delete tasks in their list
+ - Create, manage, and delete their task lists
+ - Add, edit, and remove tasks from their task lists
  - Mark tasks as completed
+ - Add tags to tasks and task lists
 
 For each task, we'll be keeping track of when it was created, and if and when it was marked completed.
 The authentication mechanism (logging in and out) is already provided for you.
+Tags are also already provided for you, but you'll need to implement the mechanism to attach them to other objects.
 
 ## Getting Started
 First things first, we need to install the dependencies for the Todo app.
@@ -207,7 +210,7 @@ user.destroy!
 
 For more examples: http://guides.rubyonrails.org/active_record_basics.html#delete
 
-## Step 1 - The Task Model
+## Step 1 - The Task and TaskList Models
 If you're not familiar with MVC, or you want to know more about how Rails' models work,
 here's an excellent resource that covers their general purpose and functionality:
 http://guides.rubyonrails.org/active_record_basics.html#what-is-active-record-questionmark
@@ -217,34 +220,34 @@ authentication and user management. You can find whem in the `app/models/` direc
 They can also be helpful as a visual reference for what models look like, and how they're structured.
 
 ### Using Model Generators
-For our Todo list, we want to represent each individual item in the list as a `Task`.
-Each Task should correlate to a record (or row) in the database, associated to the User that owns it.
+For our Todo list, we want to represent each individual item in the list as a `TaskList`.
+Each TaskList should correlate to a record (or row) in the database, associated to the User that owns it.
 
-To create the Task model, we can use Rails' generators. Generators allow us to quickly generate scaffold
+To create the TaskList model, we can use Rails' generators. Generators allow us to quickly generate scaffold
 code, creating files for us in their appropriate locations with some basic content for structure.
 Generating models can be done with:
 
 ```bash
-rails generate model Task
+rails generate model TaskList
 ```
 
 Alternatively, we can also use its shortened form:
 
 ```bash
-rails g model Task
+rails g model TaskList
 ```
 
 This generator creates the following files:
- - `app/models/task.rb` which is the model file itself.
- - `db/migrate/####_create_tasks.rb` is the database migration to create the `tasks` table in our database.
- - `spec/factories/tasks.rb` contains a factory that used to construct Tasks with placeholder data, for testing.
- - `spec/models/task_spec.rb` is an RSpec file, where unit tests for the Task model are defined.
+ - `app/models/task_list.rb` which is the model file itself.
+ - `db/migrate/####_create_task_lists.rb` is the database migration to create the `task_lists` table in our database.
+ - `spec/factories/task_lists.rb` contains a factory that used to construct TaskLists with placeholder data, for testing.
+ - `spec/models/task_list_spec.rb` is an RSpec file, where unit tests for the TaskList model are defined.
 
 In addition, we can also provide a list of attributes to include on the model as part of the call to the
 generator. Attributes are given in `name:type` format. For example:
 
 ```bash
-rails g model Task user:references name:string
+rails g model TaskList user:references name:string tasks_count:integer
 ```
 
 This will automatically include these columns in our database migration, the association in our model,
@@ -258,14 +261,14 @@ Migrations are how we make changes to our schema. They're executed in order, so 
 and control how our database in structured. By default, they include a `change` method, where we define the
 actions that we want to perform as part of the migration.
 
-When we ran the model generator, it should have created a new migration that's named `create_tasks.rb`.
-It's responsible for creating the `tasks` table in the database, with its starting list of columns.
+When we ran the model generator, it should have created a new migration that's named `create_task_lists.rb`.
+It's responsible for creating the `task_lists` table in the database, with its starting list of columns.
 Generally, the contents of the file should look something like:
 
 ```ruby
-class CreateTasks < ActiveRecord::Migration[5.2]
+class CreateTaskLists < ActiveRecord::Migration[5.2]
   def change
-    create_table :tasks do |t|
+    create_table :task_lists do |t|
       t.timestamps
     end
   end
@@ -276,10 +279,9 @@ We want to include the following columns in our tasks table:
 
 | Name | Type | Description |
 | --- | --- | --- |
-| user_id | integer | The User that owns the Task |
-| name | string | The name of the Task |
-| completed | boolean | The completion state of the Task |
-| completed_at | timestamp | When the task was completed |
+| user_id | integer | The User that owns the TaskList |
+| name | string | The name of the TaskList |
+| tasks_count | integer | The number of Tasks in the TaskList |
 
 For each column, also consider:
  - Does it make sense for this column to be null?
@@ -306,12 +308,12 @@ http://guides.rubyonrails.org/association_basics.html
 At a high level, associations are relationships between multiple models. They reflect the relationships in our
 database, and translate them into something that we can use conveniently in Ruby.
 
-For example, the `tasks` table should have a `user_id` column, which refers to an entry in the `users` table.
-It represents the User that owns the Task. In Rails terminology, it would be said that the Task belongs to the
-User. Similarly, the User has many Tasks.
+For example, the `task_lists` table should have a `user_id` column, which refers to an entry in the `users` table.
+It represents the User that owns the TaskList. In Rails terminology, it would be said that the TaskList belongs to the
+User. Similarly, the User has many TaskLists.
 
 When defining these associations in our models, we use that same terminology.
-For example, in the `Task` model, we would define:
+For example, in the `TaskList` model, we would define:
 
 ```ruby
 class Task < ApplicationRecord
@@ -329,12 +331,31 @@ Similarly, it we wanted to define the inverse association, we would write:
 ```ruby
 class User < ApplicationRecord
   ...
-  has_many :tasks
+  has_many :task_lists
   ...
 end
 ```
 
 For examples of how associations are defined and used, see `app/models/user.rb` and `app/models/session.rb`.
+
+### Moving onto the Task Model
+Once you've created your `TaskList` model, you'll need to also create a `Task` model.
+It will be very similar to what you did before, but there's a couple of differences to keep in mind.
+
+Specifically:
+  - A `TaskList` belongs to a `User`, but a `Task` belongs to a `TaskList`.
+  - Similarly, where a `User` has many `TaskLists`, a `TaskList` has many `Tasks`.
+
+Finally, tasks would store a slightly different set of fields. In particular, we're interested in:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| task_list_id | integer | The TaskList that contains this Task |
+| name | string | The name of the Task |
+| completed | boolean | The completion state of the Task |
+| completed_at | timestamp | When the task was completed |
+
+**NOTE**: Make sure you define all the associations discussed here. You'll need them later on!
 
 ### Adding Data Validations
 Before starting, you might want to have a look at this guide about Rails validations:
@@ -354,8 +375,8 @@ The Rails presense validation relies on the `.present?` method defined on all ob
 things like `nil`, `false`, `[]` (empty array), `{}` (empty Hash), `''` (empty String).
 In our case, this would ensure that the name is not `nil` or an empty string.
 
-For this task, it's up to you which validations you use.
-As examples for this task, feel free to look at the validations in `app/models/user.rb` and `app/models/session.rb`.
+For this portion, it's up to you which validations you use.
+As examples, feel free to look at the validations in `app/models/user.rb` and `app/models/tag.rb`.
 
 ### Adding Callbacks (Side Effects)
 For more information about callbacks, there's information available in this guide:
@@ -379,6 +400,27 @@ the `completed_at` attribute on the Task when `completed` becomes true.
 
 For some examples of callbacks in action, take a look at `app/models/session.rb`.
 
+#### Counter Caches
+For convenience and performance, we've included a field called `tasks_count` on the `TaskList` model.
+It should contain the number of `Task` records that are associated to that particular `TaskList`.
+It would be fairly straightforward to add a callback that would keep this field up-to-date,
+but we can also ask Rails to do this for us.
+
+In our `Task` model, we should have an association to the `TaskList` that looks like this:
+
+```ruby
+belongs_to :task_list
+```
+
+To indicate that we want to keep a cache of the number of records that belong to the task list:
+
+```ruby
+belongs_to :task_list, counter_cache: true
+```
+
+Whenever a `Task` is created, the `tasks_count` is incremented.
+Similarly, whenever a `Task` is destroyed, the `tasks_count` field is decremented.
+
 ### Defining Factories for Models
 We use a gem called FactoryBot to create data for use during testing. We define factories that contain information
 about how to construct instances of a particular model. You can read more about FactoryBot here:
@@ -391,6 +433,7 @@ https://github.com/stympy/faker
 You can also look at the factories that are already defined in the starter code:
  - `spec/factories/users.rb`
  - `spec/factories/sessions.rb`
+ - `spec/factories/tags.rb`
 
 #### Writing Factories
 The Rails generator should have created an empty factory for the `Task` model when we created it. By default,
@@ -408,7 +451,7 @@ the factory. For example, if we wanted every Task to be created with a name, we 
 
 ```ruby
 factory :task do
-  name 'My Task'
+  name { 'My Task' }
 end
 ```
 
@@ -421,9 +464,7 @@ factory :task do
 end
 ```
 
-**NOTE:** See the curly braces around the call to Faker? That tells FactoryBot to evaluate the block every time
-the factory is called. Without them, Faker would be called when the factory is first loaded, and the result
-would be baked-in to the factory. So, we'd have the same name every time!
+**NOTE**: Remember to implement the factory for both the `Task` and `TaskList` model!
 
 #### Using Factories in the Console
 If you open up the Rails console, you can call any of these factories through FactoryBot. It provides a couple
@@ -459,6 +500,7 @@ https://relishapp.com/rspec/rspec-expectations/docs/built-in-matchers
 You can also take a look at some of the existing model specs in:
  - `spec/models/user_spec.rb`
  - `spec/models/session_spec.rb`
+ - `spec/models/tag_spec.rb`
 
 To run our entire RSpec suite, we use:
 
@@ -493,7 +535,7 @@ Here we're doing 2 things:
 So, instead of calling `FactoryBot.build(:task)` we can just say `build(:task)`.
 
 Before we go any further, we'll want to make sure our factory is valid according to our model's validations.
-We can do this by running our test suite, or just this specific file:
+We can do this by running our test suite, or just a specific file:
 
 ```bash
 rspec spec/models/task_spec.rb
@@ -510,7 +552,9 @@ This includes:
 It's important that we only test what our model is doing! It's easy to get carried away and start testing code
 that our model calls or relies on. In general, that's an antipattern.
 
-## Step 2 - The Task Serializer
+**NOTE**: Remember to write tests for both the `Task` and `TaskList` model!
+
+## Step 2 - The Task and TaskList Serializers
 To send information to our Frontend, we'll need to serialize it into a format the Frontend can understand.
 In our case, we're using JSON. To do this, we need to decide how our object is serialized, and which attributes
 are included in the serialization.
@@ -519,8 +563,8 @@ We use Serializers to control how the response is structured. They're provided b
 gem that's defined in our `Gemfile`.
 
 ### Using Serializer Generators
-To serializer Tasks, we'll want to create a `TaskSerializer`. We can generate the scaffold for one using the
-built-in generator:
+To serialize Tasks, we'll want to create a `TaskSerializer` and `TaskListSerializer`.
+We can generate the scaffold for one using the built-in generator:
 
 ```bash
 rails g serializer Task
@@ -577,50 +621,62 @@ class TaskSerializer < ApplicationSerializer
   attribute :name
   ...
 
-  belongs_to :user
+  belongs_to :task_list
 end
 ```
 
 There are two primary differences between attributes and associations:
- 1. Associations will always try to use a serializer. (ie. `belongs_to :user` will use the `UserSerializer`.)
+ 1. Associations will always try to use a serializer. (ie. `belongs_to :task_list` will use the `TastListSerializer`.)
  2. Associations are only serialized to 1 layer of depth by default.
  
-So, if we defined associations in our `UserSerializer`, they wouldn't be included in the User serialized
-by the `user` attribute in the `TaskSerializer`.
+So, if we defined associations in our `TaskListSerializer`, they wouldn't be included in the User serialized
+by the `task_list` attribute in the `TaskSerializer`.
 
 For examples of serializers, take a look at others in `app/serializers`.
 
-## Step 3 - The Tasks Controller
+**NOTE**: Reme
+
+## Step 3 - The Tasks and TaskLists Controllers
 Before we start, you can read more about Rails controllers here:
 http://guides.rubyonrails.org/action_controller_overview.html#what-does-a-controller-do-questionmark
 
 Controllers are the part of our system that receives incoming requests from the client, and dispatches method calls
 into our codebase. They serve as the interface which the client can call, almost as if it were calling a function.
 
-The Frontend needs to be able to:
- - View all of the User's Tasks
- - Fetch a specific Task, by its ID
- - Create a new Task
+Our frontend needs to interact with both Tasks and TaskLists.
+For TaskLists, the frontend needs to be able to:
+ - View all of the User's Task Lists
+ - Fetch a specific Task List, by its ID
+ - Create a new Task List
+ - Edit an existing Task List
+ - Delete a Task List
+
+For Tasks, the following operations are needed:
+ - View all the Tasks in a specific Task List
+ - Add a Task to an existing Task List
  - Edit an existing Task
+ - Mark as Task as completed
  - Delete a Task
 
-These actions will be performed by the controller, which will also be responsible for deciding what the client
+These actions will be performed by controllers, which will also be responsible for deciding what the client
 receives as a response, once the actions are complete.
 
 ### Using Controller Generators
-To get started, we'll be using Rails' generators to scaffold our controller. To generate a new controller, we write:
+To get started, we'll be using Rails' generators to scaffold our controller.
+We're going to start with the `TaskListsController`, and then move onto the `TasksController`.
+To generate a new controller, we write:
 
 ```bash
-rails g controller Tasks
+rails g controller TaskLists
 ```
 
 **NOTE:** Controller names are plural! A controller represents the entire collection of a particular resource
-(ie. In our case, all of the Tasks that exist in the system), and Rails expects them to have a pluralized name
+(ie. In our case, all of the TaskLists that exist in the system), and Rails expects them to have a pluralized name
 in order to be able to route calls to them correctly.
 
 This generator creates the following files:
- - `app/controllers/tasks_controller.rb` which is the actual controller.
- - `spec/controllers/tasks_controller_spec.rb` is an RSpec file, where we define tests for the controller.
+ - `app/controllers/task_lists_controller.rb` which is the actual controller.
+ - `spec/controllers/task_lists_controller_spec.rb` is an RSpec file, where we define tests for the controller.
 
 ### Defining Actions
 Controller actions represent methods that the client is able to remotely call.
@@ -629,35 +685,35 @@ As an API, we have 5 basic actions that we care about:
 
 | Name | Description |
 | ---- | ----------- |
-| index | Get a list of items. For example, get a list of all Users. |
+| index | Get a list of items. For example, get a list of all Task Lists. |
 | show | Fetch a specific item, by ID. |
 | create | Create a new item. |
 | update | Edit an existing item. |
 | destroy | Delete an existing item. |
 
-These correspond to specific HTTP verbs and URLs. Let's take Tasks for example:
+These correspond to specific HTTP verbs and URLs. Let's take Task Lists for example:
 
 | Verb | Path | Action |
 | ---- | ---- | ------ |
-| GET  | /tasks | index |
-| GET  | /tasks/:id | show |
-| POST | /tasks | create |
-| PATCH | /tasks/:id | update |
-| DELETE | /tasks/:id | destroy |
+| GET  | /task_lists | index |
+| GET  | /task_lists/:id | show |
+| POST | /task_lists | create |
+| PATCH | /task_lists/:id | update |
+| DELETE | /task_lists/:id | destroy |
 
 #### Rendering JSON
 In a traditional Rails App, controllers hand off data to views which render either HTML or XML using ERB.
 Stuff we don't really care about.
 Since we're an API, that's not going to work for us. Luckily, we (should) have already defined a serializer
-for out Task model, which will take care of the heavy lifting for us.
+for out Task List model, which will take care of the heavy lifting for us.
 
 All we need to do is tell the controller to call the serializer. All we need to do is call `render(...)` and
 pass the object we want to serialize under the `json` key of a Hash. For example:
 
 ```ruby
 def show
-  @task = Task.find(params[:id])
-  render json: @task
+  @task_list = TaskList.find(params[:id])
+  render json: @task_list
 end
 ```
 
@@ -673,31 +729,30 @@ Rails provides a mechanism for keeping inputs clean, called Strong Parameters. H
 more information on the subject:
 http://edgeguides.rubyonrails.org/action_controller_overview.html#strong-parameters
 
-In our case, we want the user to be able to set the `name` and `completed` flag on a Task, but we don't want
-them to be able to touch any of the others. To do this, we'd define a `task_params` method:
+In our case, we want the user to be able to set the `name` flag on a `TaskList`, but we don't want
+them to be able to touch any of the others. To do this, we'd define a `task_list_params` method:
 
 ```ruby
-def task_params
-  params.require(:task).permit(:name, :completed)
+def task_list_params
+  params.require(:task_list).permit(:name, :completed)
 end
 ```
 
-The `.require(:task)` call we make tells Rails to verify that the incoming parameters includes a `task: {}` object.
+The `.require(:task_list)` call we make tells Rails to verify that the incoming parameters includes a `task_list: {}`.
 If it's missing, it'll throw an error, and that'll automatically be converted to an HTTP error code.
-Otherwise, it returns the contents of the `task: {}` object.
+Otherwise, it returns the contents of the `task_list: {}` object.
 
-Essentially, we're expecting the parameters to be wrapped in a `task` object, like so:
+Essentially, we're expecting the parameters to be wrapped in a `task_list` object, like so:
 
 ```json
 {
-  "task": {
-    "name": "My Task",
-    "completed": true
+  "task_list": {
+    "name": "Upcoming Tasks"
   }
 }
 ```
 
-The `.require(...)` returns the object containing the `name` and `completed` fields, which we whitelist with the
+The `.require(...)` returns the object containing the `name` field, which we whitelist with the
 subsequent call to `.permit(...)`.
 
 #### Clean up with Callbacks
@@ -706,24 +761,24 @@ time. Rails refers to callbacks in controllers as 'Filters'. You can read more a
 http://guides.rubyonrails.org/action_controller_overview.html#filters
 
 In our case, we can use them to clean up a bit of duplicated set up logic. The `show`, `update`, and `destroy`
-actions refer to a specific resource, (ie. they're called on a specific Task), so we can pull out the logic
-that loads that Task from the DB.
+actions refer to a specific resource, (ie. they're called on a specific `TaskList`), so we can pull out the logic
+that loads that `TaskList` from the DB.
 
 To do this, we write:
 
 ```ruby
-class TasksController < ApplicationController
-  before_action :set_task, only: %i[show update destroy]
+class TaskListsController < ApplicationController
+  before_action :set_task_list, only: %i[show update destroy]
 
   ...
 
-  def set_task
-    @task = Task.find(params[:id])
+  def set_task_list
+    @task_list = TaskList.find(params[:id])
   end
 end
 ```
 
-Now we have a `@task` instance variable predefined for all of these actions!
+Now we have a `@task_list` instance variable predefined for all of these actions!
 
 #### Error Handling
 Our `ApplicationController` (the base class for all our controllers) already implements interceptors that catch
@@ -747,7 +802,7 @@ Routes are defined in `config/routes.rb`.
 In our case, we want to define a resource, which Rails has a convenient helper for:
 
 ```ruby
-resources :tasks
+resources :task_lists
 ```
 
 **NOTE:** There's a difference between `resources` and `resource`. In our case, we want to use `resources`,
@@ -761,11 +816,96 @@ To view all of the routes currently in our app, we can run:
 rails routes
 ```
 
+### Moving onto the Tasks Controller
+If you haven't done so yet, it's time to create the `TasksController`. We can do so using the generator:
+
+```bash
+rails g controller Tasks
+```
+
+The `TasksController` is going to work a little differently, however.
+For tasks, we only really need them in the context of some specific task list.
+(For example: If you're looking at your 'Work' list, you don't care about tasks from your 'Side Projects' list.)
+
+We're going to structure our API to reflect this, by making tasks a sub-resource of task lists.
+This means the routes are going to be a little different:
+
+| Verb | Path | Action |
+| ---- | ---- | ------ |
+| GET  | /task_lists/:task_list_id/tasks | index |
+| GET  | /task_lists/:task_list_id/tasks/:id | show |
+| POST | /task_lists/:task_list_id/tasks | create |
+| PATCH | /task_lists/:task_list_id/tasks/:id | update |
+| DELETE | /task_lists/:task_list_id/tasks/:id | destroy |
+
+Notice how the `:task_list_id` parameter appears as part of every route.
+
+#### Working with Sub-Resources
+With sub-resources, we're working with multiple models, instead of just one.
+If you recall the `show` method we wrote for the `TaskListsController`, it would lookup a `TaskList` by ID.
+Since we're dealing with multiple IDs now, we'll need to use each of them to drill downwards.
+
+The change is actually simpler than it sounds:
+```ruby
+def show
+  @task_list = TaskList.find(params[:task_list_id])
+  @task = @task_list.tasks.find(params[:id])
+  render json: @task
+end
+```
+
+Note how we use the `tasks` association that we defined on the `TaskList`.
+This will ensure that the `:id` parameter actually corresponds to a task in the task list specified by `:task_list_id`,
+(so, it won't find the task if it's part of a different task list).
+
+#### Using Callbacks for Structure
+In every action of the `TasksController`, we will have access to a `:task_list_id` parameter, which will contain
+the ID of the parent task list. Since the logic to look-up the task list will be identical for each action, we can
+use a callback to extract the handling into a single method.
+
+This should look something like:
+
+```ruby
+class TasksController < ApplicationController
+  before_action :set_task_list
+  before_action :set_task, only: %i[show update destroy]
+
+private
+
+  def set_task_list
+    @task_list = TaskList.find(params[:task_list_id])
+  end
+
+  def set_task
+    @task = @task_list.tasks.find(params[:id])
+  end
+end
+```
+
+Above, the `set_task` function also demonstrates how we can pull out the common logic of fetching a `Task` by its ID.
+
+#### Routing with Sub-Resources
+Defining the routes for our sub-resource is actually very simple, and the structure is fairly intuitive.
+In routes file (`config/routes.rb`), we nest the `tasks` resource under `task_lists`, like so:
+
+```ruby
+resources :task_lists do
+  resources :tasks
+end
+```
+
+You can verify that everything is set up correctly by running:
+
+```bash
+rails routes
+```
+
 ### Writing RSpecs
 There's already specs for the `SessionsController`, which might be useful as a reference when writing tests for your
 own controller. You can find them in `spec/controllers/sessions_controller_spec.rb`.
+In particular, it demonstrates how to create authenticate with the API using a Session.
 
-## Step 4 - The Task Policy
+## Step 4 - The Task and TaskList Policies
 Pundit is a gem we use to manage authorization. It provides a framework for us to be able to control which users
 can take which actions, which records they're allowed to view and touch, and which attributes they're allowed to
 change.
@@ -828,7 +968,7 @@ To call the policy in a controller, we use `authorize(...)`. For example:
 ```ruby
 def update
   authorize(@task)
-  @task.update!(task_params)
+  @task.update!(task_list_params)
   render json: @task
 end
 ```
@@ -842,7 +982,7 @@ success. This makes it convenient for chaining calls together:
 
 ```ruby
 def update
-  authorize(@task).update!(task_params)
+  authorize(@task).update!(task_list_params)
   render json: @task
 end
 ```
@@ -875,7 +1015,7 @@ Now that we've defined our permitted attributes, the next step is to use them fr
 with the `permitted_attributes(...)` method. It takes a model and automatically looks up the policy, fetches
 the list of attributes permitted for the current action, and filters the incoming parameters.
 
-This means we can get rid of our `task_params` function, and instead do:
+This means we can get rid of our `task_list_params` function, and instead do:
 
 ```ruby
 def update
