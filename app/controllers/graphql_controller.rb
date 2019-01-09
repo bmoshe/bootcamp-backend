@@ -21,7 +21,7 @@ private
   end
 
   def context
-    { current_user: current_user }
+    { current_session: current_session }
   end
 
   # Handle form data, JSON body, or a blank value
