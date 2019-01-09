@@ -343,3 +343,13 @@ It's important that we only test what our model is doing! It's easy to get carri
 that our model calls or relies on. In general, that's an antipattern.
 
 **NOTE**: Remember to write tests for both the `Task` and `TaskList` model!
+
+# Chapter 1 - Checklist
+Here's a checklist of things that you should've covered by the time you've finished with this chapter:
+
+[ ] Create your `Task` and `TaskList` models.
+[ ] Add data validations to `Task` and `TaskList`.
+[ ] Add associations between `User`, `TaskList`, and `Task`.
+[ ] Implement handling for `completed` and `completed_at` on `Task` using callbacks.
+[ ] Create factories for `Task` and `TaskList`.
+[ ] Write RSpecs for `Task` and `TaskList`.
