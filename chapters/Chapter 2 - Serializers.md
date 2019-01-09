@@ -86,7 +86,7 @@ Here's a checklist of things that you should've covered by the time you've finis
 - [ ] Create a `TaskSerializer` and a `TaskListSerializer`.
 - [ ] Add necessary attributes associations to the serializers.
 
-(If only we had a TODO list app we could put these in!)
+(Yep, this chapter's pretty short.)
 
 | [&larr; Chapter 1](./Chapter%201%20-%20Models.md) | [Back to Intro](../README.md) | [Chapter 3 &rarr;](./Chapter%203%20-%20Controllers.md) |
 | --:| --:| --: |
