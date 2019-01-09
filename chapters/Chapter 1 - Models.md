@@ -353,3 +353,5 @@ Here's a checklist of things that you should've covered by the time you've finis
 - [ ] Implement handling for `completed` and `completed_at` on `Task` using callbacks.
 - [ ] Create factories for `Task` and `TaskList`.
 - [ ] Write RSpecs for `Task` and `TaskList`.
+
+(If only we had a TODO list app we could put these in!)
