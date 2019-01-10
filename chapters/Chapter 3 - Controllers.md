@@ -308,7 +308,7 @@ Here's a checklist of things that you should've covered by the time you've finis
 - [ ] Create a `TaskListsController` and define its routes.
 - [ ] Implement the `index`, `show`, `create`, `update`, and `destroy` actions in `TaskListsController`.
 - [ ] Create a `TasksController` as a sub-resource of task lists.
-- [ ] Implement the `index`, `create`, `update`, and `destroy` action in `TasksController`.
+- [ ] Implement the `index`, `create`, `update`, and `destroy` actions in `TasksController`.
 - [ ] Moved common logic between actions into callbacks.
 - [ ] Write RSpecs for `TaskListsController` and `TasksController`.
 
