@@ -6,12 +6,6 @@ Controllers are the part of our system that receives incoming requests from the 
 into our codebase. They serve as the interface which the client can call, almost as if it were calling a function.
 
 Our frontend needs to interact with both Tasks and TaskLists.
-For TaskLists, the frontend needs to be able to:
- - View all of the User's Task Lists
- - Fetch a specific Task List, by its ID
- - Create a new Task List
- - Edit an existing Task List
- - Delete a Task List
 
 For Tasks, the following operations are needed:
  - View all the Tasks in a specific Task List
@@ -24,6 +18,16 @@ These actions will be performed by controllers, which will also be responsible f
 receives as a response, once the actions are complete.
 
 ## Part 1 - The TaskLists Controller
+We're going to start by implementing the `TaskListsController`.
+The controller will encapsulate all the actions related to the `TaskList` model.
+To render the response back to the frontend, it'll use the `TaskListSerializer`.
+
+For reference, the frontend needs to be able to:
+ - View all of the User's Task Lists
+ - Fetch a specific Task List, by its ID
+ - Create a new Task List
+ - Edit an existing Task List
+ - Delete a Task List
 
 ## Using Controller Generators
 To get started, we'll be using Rails' generators to scaffold our controller.
@@ -64,6 +68,35 @@ These correspond to specific HTTP verbs and URLs. Let's take Task Lists for exam
 | POST | /task_lists | create |
 | PATCH | /task_lists/:id | update |
 | DELETE | /task_lists/:id | destroy |
+
+So, if you wanted to define all of these actions in your controller, it would look like:
+
+```ruby
+class TaskListsController < ApplicationController
+  def index
+    # TODO: Implement me!
+  end
+
+  def show
+    # TODO: Implement me!
+  end
+
+  def create
+    # TODO: Implement me!
+  end
+
+  def update
+    # TODO: Implement me!
+  end
+
+  def destroy
+    # TODO: Implement me!
+  end
+end
+```
+
+Rails will automatically take care of calling these methods (we'll set up the routes a little later on).
+So 
 
 ### Rendering JSON
 In a traditional Rails App, controllers hand off data to views which render either HTML or XML using ERB.
@@ -149,13 +182,13 @@ Our `ApplicationController` (the base class for all our controllers) already imp
 exceptions and gracefully render error messages or status codes back to the client.
 
 Currently, it's set up to handle:
- - `ActiveRecord::RecordNotFound`
- - `ActiveRecord::RecordInvalid`
- - `ActiveRecord::RecordNotSaved`
- - `ActiveRecord::RecordNotDestroyed`
+ - `ActiveRecord::RecordNotFound` (Raised when `.find(...)` doesn't find the requested record.)
+ - `ActiveRecord::RecordInvalid` (Raised when data validations fail.)
+ - `ActiveRecord::RecordNotSaved` (Raised when a callback prevents a model from being saved.)
+ - `ActiveRecord::RecordNotDestroyed` (Raised when a callback prevents a model from being destroyed.)
 
-Have a look at what throws these exceptions in Rails, and how you can leverage those systems to use the error handling
-we already have in place.
+This means that you shouldn't need to add any error-handling logic into your controller actions.
+It's all already handled at the top level.
 
 ## Routing
 Once we have our controller in place, we need to tell Rails how to route requests to the methods in the controller.
