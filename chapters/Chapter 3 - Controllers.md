@@ -63,11 +63,11 @@ These correspond to specific HTTP verbs and URLs. Let's take Task Lists for exam
 
 | Verb | Path | Action |
 | ---- | ---- | ------ |
-| GET  | /task_lists | index |
-| GET  | /task_lists/:id | show |
-| POST | /task_lists | create |
-| PATCH | /task_lists/:id | update |
-| DELETE | /task_lists/:id | destroy |
+| GET  | `/task_lists` | index |
+| GET  | `/task_lists/:id` | show |
+| POST | `/task_lists` | create |
+| PATCH | `/task_lists/:id` | update |
+| DELETE | `/task_lists/:id` | destroy |
 
 So, if you wanted to define all of these actions in your controller, it would look like:
 
@@ -229,11 +229,11 @@ This means the routes are going to be a little different:
 
 | Verb | Path | Action |
 | ---- | ---- | ------ |
-| GET  | /task_lists/:task_list_id/tasks | index |
-| GET  | /task_lists/:task_list_id/tasks/:id | show |
-| POST | /task_lists/:task_list_id/tasks | create |
-| PATCH | /task_lists/:task_list_id/tasks/:id | update |
-| DELETE | /task_lists/:task_list_id/tasks/:id | destroy |
+| GET  | `/task_lists/:task_list_id/tasks` | index |
+| GET  | `/task_lists/:task_list_id/tasks/:id` | show |
+| POST | `/task_lists/:task_list_id/tasks` | create |
+| PATCH | `/task_lists/:task_list_id/tasks/:id` | update |
+| DELETE | `/task_lists/:task_list_id/tasks/:id` | destroy |
 
 Notice how the `:task_list_id` parameter appears as part of every route.
 
