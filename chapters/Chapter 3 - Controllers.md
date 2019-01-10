@@ -74,29 +74,29 @@ So, if you wanted to define all of these actions in your controller, it would lo
 ```ruby
 class TaskListsController < ApplicationController
   def index
-    # TODO: Implement me!
+    # TODO: Returns a list of TaskLists
   end
 
   def show
-    # TODO: Implement me!
+    # TODO: Return a specific TaskList
   end
 
   def create
-    # TODO: Implement me!
+    # TODO: Create a new TaskList
   end
 
   def update
-    # TODO: Implement me!
+    # TODO: Edit an existing TaskList
   end
 
   def destroy
-    # TODO: Implement me!
+    # TODO: Delete an existing TaskList
   end
 end
 ```
 
 Rails will automatically take care of calling these methods (we'll set up the routes a little later on).
-So 
+**NOTE**: The naming of these methods is important. Rails handles routing based on method names.
 
 ### Rendering JSON
 In a traditional Rails App, controllers hand off data to views which render either HTML or XML using ERB.
