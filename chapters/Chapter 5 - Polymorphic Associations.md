@@ -13,6 +13,9 @@ Furthermore, a Tag can be attached to both Task Lists and Tasks. To support this
 Polymorphic Association.
 
 ## Creating the ObjectTag Model
+The Rails Guide includes a section on Polymorphic Associations. You can read more about them here:
+https://guides.rubyonrails.org/association_basics.html#polymorphic-associations
+
 The `ObjectTag` model will represent the relationship between any one `Tag` and any of `Taggable` object.
 To create the table and it's model, we use a generator.
 Refer to [Chapter 1](./Chapter%201%20-%20Models.md) if you need to refresh your memory on model genrators.
