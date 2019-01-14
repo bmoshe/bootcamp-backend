@@ -356,5 +356,5 @@ Here's a checklist of things that you should've covered by the time you've finis
 
 (If only we had a TODO list app we could put these in!)
 
-| [Back to Intro](../README.md) | [Chapter 2 &rarr;](./Chapter%202%20-%20Serializers.md) |
-| --:| --:|
+| [Chapter 0 &rarr;](./Chapter%200%20-%20Getting%20Started.md) | [Back to Intro](../README.md) | [Chapter 2 &rarr;](./Chapter%202%20-%20Serializers.md) |
+| --:| --:| --:|
