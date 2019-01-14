@@ -144,4 +144,20 @@ def permitted_attributes
 end
 ```
 
-**NOTE**: Notice how `tag_ids` appears twice? The second occurrence (`tag_ids: []`) permits an Array of scalar
+**NOTE**: Notice how `tag_ids` appears twice? The first occurrence (`:tag_ids`) permits a scalar value, whereas the
+second occurrence (`tag_ids: []`) permits an Array of scalars. We do this because we want to be able to accept a list
+of IDs, but also need to accept an empty with (to remove all tags). Rails coerces an empty array `[]` into a scalar
+value `null`.
+
+# Chapter 5 - Checklist
+Here's a checklist of things that you should've covered by the time you've finished with this chapter:
+
+- [ ] Create an `ObjectTag` model.
+- [ ] Add the `tags` associations to both `TaskList` and `Task`.
+- [ ] Include `tags` in the serialization of both `TaskList` and `Task`.
+- [ ] Accept the `tag_ids` parameter from the frontend.
+
+(Checked off everything on the list? Looks like you're in control of the situation.)
+
+| [&larr; Chapter 4](./Chapter%204%20-%20Policies.md) | [Back to Intro](../README.md) | [Chapter 6 &rarr;](./Chapter%206%20-%20Concerns.md) |
+| --:| --:| --: |
