@@ -1,4 +1,4 @@
-# Chapter 10 - GraphQL Mutations
+# Chapter 9 - GraphQL Mutations
 In the previous chapter, we added GraphQL queries to our API to allow the frontend to read information from our system.
 Now it's time add support for write operations. In GraphQL, write operations are handling by mutations.
 Writes operations are anything that change the state of the database;
@@ -109,7 +109,7 @@ end
 
 ## Testing Mutations with RSpec
 
-# Chapter 10 - Checklist
+# Chapter 9 - Checklist
 Here's a checklist of things that you should've covered by the time you've finished with this chapter:
 
 - [ ] Define and implement `CreateTaskList`, `UpdateTaskList`, and `DeleteTaskList` mutations.
