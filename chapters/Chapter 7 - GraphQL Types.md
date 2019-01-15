@@ -1,7 +1,28 @@
 # Chapter 7 - GraphQL Types
+Until now, we've been working on a REST API for our application. At Platterz, we use a combination of REST and GraphQL.
+Much of the original API still relies on REST, whereas a lost of newer features are starting to take advantage of
+the features and benefits of GraphQL.
+
+In Rails, we use a gem called GraphQL Ruby (creatively named, I know) to handle all of the heavy-lifting required to
+implement a GraphQL API. Our application only needs to define the Schema (types), and implement the endpoints
+(queries and mutations).
+
+GraphQL was covered at a high-level in the first week of bootcamp. Now, we're going to put your learnings to the test,
+and build a GraphQL API for your TODO list application.
 
 ## Defining GraphQL Types
-To generate a GraphQL type, we can use the provided Rails generator:
+GraphQL is statically typed. This means that type information about the API is known before the start of execution.
+Our API is responsible for defining all of the types and data structures that it makes use of, which the frontend
+will consume. Collectively, all these types and behaviours are known as our schema.
+
+We're going to be using a few different kinds of types:
+ - Scalars, which are simple types like Integers and Strings
+ - Types, which represent aggregate types (in our case, these are our models)
+ - Interfaces, which represent encapsulate attributes and behaviours, and are implemented by other types
+
+### Using the GraphQL Generators
+First off, we'll define types for our `TaskList` and `Task` models.
+To generate a GraphQL Type, we can use the provided Rails generator:
 
 ```bash
 rails g graphql:object Task
