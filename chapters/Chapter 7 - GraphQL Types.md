@@ -10,6 +10,24 @@ implement a GraphQL API. Our application only needs to define the Schema (types)
 GraphQL was covered at a high-level in the first week of bootcamp. Now, we're going to put your learnings to the test,
 and build a GraphQL API for your TODO list application.
 
+## Getting Started
+It's strongly recommended that you install a GraphQL IDE for this upcoming segment.
+At Platterz, we prefer GraphQL Playground. If you've been using Postman or a similar tool to interact with the REST API,
+it's strongly recommended you install a GraphQL IDE for use with the GraphQL API.
+
+Unlike REST, all GraphQL interactions use the `POST` HTTP verb, and are made to the same URL.
+Further, the GraphQL Playground includes features like type-checking, autocompletion, and error highlighting.
+
+You can install GraphQL Playground using `brew cask` from the command line:
+
+```bash
+brew cask install graphql-playground
+```
+
+It's a graphical application, so after the installation finishes, you'll find it in yours apps folder.
+It includes a graphical schema viewer, which can help you introspect and examine your GraphQL schema.
+The GraphQL API is served from `http://localhost:3000/graphql` when your Rails server is running.
+
 ## Defining GraphQL Types
 GraphQL is statically typed. This means that type information about the API is known before the start of execution.
 Our API is responsible for defining all of the types and data structures that it makes use of, which the frontend
