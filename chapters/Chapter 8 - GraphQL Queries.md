@@ -121,10 +121,13 @@ In general, tests should ensure that:
  - The Query raises correctly raises authorization errors
 
 # Chapter 8 - Checklist
+Here's a checklist of things that you should've covered by the time you've finished with this chapter:
 
 - [ ] Define and implement `Queries::TaskList` and `Queries::Task`.
 - [ ] Add the queries to the `Types::QueryType` (the root type).
 - [ ] Write RSpecs for `Queries::TaskList` and `Queries::Task`.
+
+(If you've got any outstanding queries, feel free to direct them to us!)
 
 | [&larr; Chapter 7](./Chapter%207%20-%20GraphQL%20Types.md) | [Back to Intro](../README.md) | [Chapter 9 &rarr;](./Chapter%209%20-%20GraphQL%20Mutations.md) |
 | --:| --:| --: |
