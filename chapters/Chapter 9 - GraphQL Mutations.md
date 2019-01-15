@@ -110,3 +110,15 @@ end
 ## Testing Mutations with RSpec
 
 # Chapter 10 - Checklist
+Here's a checklist of things that you should've covered by the time you've finished with this chapter:
+
+- [ ] Define and implement `CreateTaskList`, `UpdateTaskList`, and `DeleteTaskList` mutations.
+- [ ] Define and implement `CreateTask`, `UpdateTask`, `DeleteTask`, and `CompleteTask` mutations.
+- [ ] Define input types for your mutations.
+- [ ] Add the mutations to the `Types::MutationType` (the root type).
+- [ ] Write RSpecs for each of your mutations.
+
+(Something, something, terrible joke involving the word 'mutation'.)
+
+| [&larr; Chapter 8](./Chapter%208%20-%20GraphQL%20Queries.md) | [Back to Intro](../README.md) |
+| --:| --:|
