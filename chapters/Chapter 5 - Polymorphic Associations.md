@@ -1,4 +1,4 @@
-# Chapter 5 - Polymorhpic Associations
+# Chapter 5 - Polymorphic Associations
 By now, we should have a functioning system for creating Task Lists and Tasks. The next part of this project will focus
 on adding Tags to both Task Lists and Tasks.
 
