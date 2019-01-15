@@ -1,4 +1,8 @@
 # Chapter 10 - GraphQL Mutations
+In the previous chapter, we added GraphQL queries to our API to allow the frontend to read information from our system.
+Now it's time add support for write operations. In GraphQL, write operations are handling by mutations.
+Writes operations are anything that change the state of the database;
+create, update, and delete operations are all mutations.
 
 Much like Queries, and different to Controllers, each Mutation lives in its own class and file.
 There's already a couple of Mutations defined for you, which you can use for reference:
@@ -12,7 +16,19 @@ Our frontend will need the following mutations:
  - `Mutations::UpdateTask`, to edit an existing `Task`.
  - `Mutations::CompleteTask`, to mark a `Task` as having been completed.
 
+Notice how we've split up editing a task from marking it complete. This is a design decision that is more in line with
+how GraphQL API are usually structured. Less focus on CRUD, and more focus on representative actions.
+We could have actually done the same for our REST API, but we kept the actions together for purposes of simplicity.
+
 ## Defining Mutations
+
+**NOTE**: While GraphQL Ruby does provide generators for mutations, they do nothing behave correctly at the moment.
+Refrain from using them (for the time being), as doing so will leave your code full of syntax errors.
+
+Since we can't use generators to create mutations, we'll do so manually. Mutations live in `app/graphql/mutations`.
+The name of the mutation should reflect what it does.
+To start, let's create the `Mutations::CreateTaskList` (in `app/graphql/mutations/create_task_list.rb`).
+An empty mutation would look very similar to a query:
 
 ```ruby
 class Mutations::CreateTaskList < Mutations::BaseMutation
@@ -20,6 +36,8 @@ class Mutations::CreateTaskList < Mutations::BaseMutation
   end
 end
 ```
+
+Much like with queries, the `resolve` method is responsible for implementing the logic of the mutation.
 
 ### GraphQL Input Types
 Before we implement our mutation, we need to define the data type that the mutation accepts as an input.
