@@ -12,8 +12,8 @@ and build a GraphQL API for your TODO list application.
 
 ## Getting Started
 It's strongly recommended that you install a GraphQL IDE for this upcoming segment.
-At Platterz, we prefer GraphQL Playground. If you've been using Postman or a similar tool to interact with the REST API,
-it's strongly recommended you install a GraphQL IDE for use with the GraphQL API.
+At Platterz, we prefer GraphQL Playground. If you've been using Postman to interact with the REST API,
+this will fill the same niche, but provide you with features tailored towards GraphQL.
 
 Unlike REST, all GraphQL interactions use the `POST` HTTP verb, and are made to the same URL.
 Further, the GraphQL Playground includes features like type-checking, autocompletion, and error highlighting.
