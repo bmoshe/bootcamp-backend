@@ -4,7 +4,7 @@ Now it's time add support for write operations. In GraphQL, write operations are
 Writes operations are anything that change the state of the database;
 create, update, and delete operations are all mutations.
 
-Much like Queries, and different to Controllers, each Mutation lives in its own class and file.
+Much like Queries, and different to Controllers, each mutation lives in its own class and file.
 There's already a couple of Mutations defined for you, which you can use for reference:
  - [`Mutations::LogIn`](../app/graphql/mutations/log_in.rb)
  - [`Mutations::LogOut`](../app/graphql/mutations/log_out.rb)

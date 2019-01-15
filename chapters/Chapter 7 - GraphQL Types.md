@@ -39,7 +39,7 @@ end
 **NOTE**: Remember to generate types for both the `TaskList` and `Task` models.
 
 ### Adding Fields to GraphQL Types
-GraphQL Types are very similar to serializers, as they define which fields on the model are available on the frontend.
+GraphQL types are very similar to serializers, as they define which fields on the model are available on the frontend.
 Unlike serializers however, they include type information about the field.
 For example:
 
@@ -163,7 +163,7 @@ For our application, we'll want the following connections:
 # Chapter 7 - Checklist
 Here's a checklist of things that you should've covered by the time you've finished with this chapter:
 
-- [ ] Add GraphQL Types `Types::TaskListType` and `Types::TaskType`.
+- [ ] Add GraphQL types `Types::TaskListType` and `Types::TaskType`.
 - [ ] Define fields in your types which should be available to the frontend.
 - [ ] Add a GraphQL Interface `Types::TaggableType`.
 - [ ] Make `Types::TaskListType` and `Types::TaskType` implement `Types::TaggableType`.

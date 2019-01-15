@@ -20,7 +20,7 @@ the `user -> task_lists` to list `TaskLists`, and `task_list -> tasks` to list `
 ## Defining GraphQL Queries
 GraphQL Queries are placed into the `app/graphql/queries` folder. Unfortunately, there's no generator for them, so you'll
 need to create and populate the files manually.
-Below is the general structure for the `Queries::Task` Query. It should be placed in `app/graphql/queries/task.rb`:
+Below is the general structure for the `Queries::Task` query. It should be placed in `app/graphql/queries/task.rb`:
 
 ```ruby
 class Queries::Task < Queries::BaseQuery
@@ -40,7 +40,7 @@ Inside of the `resolve` method, you have access to many of the same functions yo
 ### Defining Arguments and Return Types
 Since GraphQL is statically typed, we'll need to provide it with a bit of additional type information.
 Notably:
- - The return type of the Query
+ - The return type of the query
  - The names and types of any arguments it accepts
 
 For the `Queries::Task` query, the return type will be a `Types::TaskType`. It shouldn't be nullable, since we want
@@ -66,7 +66,7 @@ GraphQL Ruby will automatically pass the `id` argument it receives from the fron
 
 ### Implementing the Task Query
 Once we've defined the type information for our schema, we can start implementing the logic.
-The `Queries::Task` Query should behave like the `show` method in a controller.
+The `Queries::Task` query should behave like the `show` method in a controller.
 It accepts an ID, and then returns the corresponding record.
 
 ```ruby
@@ -77,9 +77,9 @@ def resolve(id:)
 end
 ```
 
-**NOTE**: When we call `authorize(...)` in a Query or Mutation, we need to pass a second argument which is the method
+**NOTE**: When we call `authorize(...)` in a query or Mutation, we need to pass a second argument which is the method
 in the policy that we want to call. In a controller, `authorize(...)` will automatically infer the method to call based
-on the controller action. However, in a Query, it's not able to do so.
+on the controller action. However, in a query, it's not able to do so.
 In this case, calling `authorize(task, :show?)` calls the `show?` method in the `TaskPolicy`. Beyond that, the method
 behaves as it would in a controller.
 
@@ -106,10 +106,10 @@ GraphQL Queries are implemented as POROs (Plain-Old Ruby Objects).
 This means you can construct them and call methods as you would for any other normal object.
 
 The construct of the query excepts two named parameters:
- - `object`, which refers to the parent object of the field. Since our Query is on the root of the schema, this is always `nil`.
+ - `object`, which refers to the parent object of the field. Since our query is on the root of the schema, this is always `nil`.
  - `context`, which is a Hash containing contextual information. This is how we pass the `current_session`.
 
-Once you've constructed an instance of the Query, you can call `resolve` as you would any other method.
+Once you've constructed an instance of the query, you can call `resolve` as you would any other method.
 For example, here's how we'd call the `Queries::Task` query from the console:
 
 ```ruby
@@ -125,9 +125,9 @@ There's a couple of examples of how to test GraphQL queries in the `spec` folder
 Unfortunately, there's no generators for GraphQL Queries, so you'll need to create the files manually.
 
 In general, tests should ensure that:
- - The Query returns the correct result
- - The Query raises the correct errors when the input is incorrect
- - The Query raises correctly raises authorization errors
+ - The query returns the correct result
+ - The query raises the correct errors when the input is incorrect
+ - The query raises correctly raises authorization errors
 
 # Chapter 8 - Checklist
 Here's a checklist of things that you should've covered by the time you've finished with this chapter:
