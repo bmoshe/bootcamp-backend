@@ -18,7 +18,7 @@ https://guides.rubyonrails.org/association_basics.html#polymorphic-associations
 
 The `ObjectTag` model will represent the relationship between any one `Tag` and any of `Taggable` object.
 To create the table and it's model, we use a generator.
-Refer to [Chapter 1](./Chapter%201%20-%20Models.md) if you need to refresh your memory on model genrators.
+Refer to [Chapter 1](./Chapter%201%20-%20Models.md) if you need to refresh your memory on model generators.
 
 Each `ObjectTag` will belong to a `Tag`, and also belong to a `Taggable` object.
 In our migration, we would write this as follows:

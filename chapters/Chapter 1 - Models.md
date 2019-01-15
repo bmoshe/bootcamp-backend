@@ -6,7 +6,7 @@ here's an excellent resource that covers their general purpose and functionality
 http://guides.rubyonrails.org/active_record_basics.html#what-is-active-record-questionmark
 
 Also, there's a few models already defined for you in the starter code, which will help with
-authentication and user management. You can find whem in the `app/models/` directory.
+authentication and user management. You can find them in the `app/models/` directory.
 They can also be helpful as a visual reference for what models look like, and how they're structured.
 
 ## Using Model Generators
@@ -161,7 +161,7 @@ For example: If we wanted to ensure that the user doesn't create a task without 
 validates :name, presence: true
 ```
 
-The Rails presense validation relies on the `.present?` method defined on all objects. It returns `false` for
+The Rails presence validation relies on the `.present?` method defined on all objects. It returns `false` for
 things like `nil`, `false`, `[]` (empty array), `{}` (empty Hash), `''` (empty String).
 In our case, this would ensure that the name is not `nil` or an empty string.
 
@@ -340,7 +340,7 @@ This includes:
  - Any public methods we've added: They need to do what we expect them to.
 
 It's important that we only test what our model is doing! It's easy to get carried away and start testing code
-that our model calls or relies on. In general, that's an antipattern.
+that our model calls or relies on. In general, that's an anti-pattern.
 
 **NOTE**: Remember to write tests for both the `Task` and `TaskList` model!
 

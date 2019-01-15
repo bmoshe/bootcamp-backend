@@ -70,7 +70,7 @@ end
 ```
 
 There are two primary differences between attributes and associations:
- 1. Associations will always try to use a serializer. (ie. `belongs_to :task_list` will use the `TastListSerializer`.)
+ 1. Associations will always try to use a serializer. (ie. `belongs_to :task_list` will use the `TaskListSerializer`.)
  2. Associations are only serialized to 1 layer of depth by default.
  
 So, if we defined associations in our `TaskListSerializer`, they wouldn't be included in the User serialized

@@ -18,7 +18,7 @@ https://api.rubyonrails.org/classes/ActiveSupport/Concern.html
 We'll start by defining the `Taggable` concern. Rails doesn't provide a generator for concerns,
 so start by creating a file at `app/models/concerns/taggable.rb`.
 
-Unlike models, controllers, policies, etc. which are `class`es, conerns are `module`s which are intended to be
+Unlike models, controllers, policies, etc. which are `class`es, concerns are `module`s which are intended to be
 included into other classes, rather than being used directly.
 Below is general structure for our concern:
 

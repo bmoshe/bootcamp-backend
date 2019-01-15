@@ -83,7 +83,7 @@ The `ISO8601DateTime` is also provided, but we prefer to use our own `Types::Dat
 ## Interface Types
 In our data structure, we use the `Taggable` concern to encapsulate the fact that both `TaskList` and `Task`
 may have attached tags. In our GraphQL schema, we can use an interface type to represent this information.
-Much like conerns, GraphQL interfaces in Ruby are modules, not classes.
+Much like concerns, GraphQL interfaces in Ruby are modules, not classes.
 
 To generate a GraphQL interface, we can use the provided Rails generator:
 
@@ -134,7 +134,7 @@ https://blog.apollographql.com/explaining-graphql-connections-c48b7c3d6976
 
 We use connections when we need to be able to paginate - that is, divide a large set of records into smaller
 chucks (or pages).
-For example: A `TaskList` can potentionally contain hundreds of tasks. If we use a connection here,
+For example: A `TaskList` can potentially contain hundreds of tasks. If we use a connection here,
 the frontend would then be able to fetch the tasks in small batches, as apposed to all in a single,
 massive (and potentially very slow) request.
 
