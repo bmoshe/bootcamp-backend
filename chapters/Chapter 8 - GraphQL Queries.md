@@ -94,7 +94,11 @@ http://graphql-ruby.org/schema/root_types.html
 To add the `Queries::Task` query to our schema, we write:
 
 ```ruby
-field :task, resolver: Queries::Task
+class Types::QueryType < Types::BaseObject
+  ...
+  field :task, resolver: Queries::Task
+  ...
+end
 ```
 
 ## Testing Queries with RSpec
