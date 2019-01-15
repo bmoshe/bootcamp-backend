@@ -22,7 +22,7 @@ We're going to be using a few different kinds of types:
 
 ### Using the GraphQL Generators
 First off, we'll define types for our `TaskList` and `Task` models.
-To generate a GraphQL Type, we can use the provided Rails generator:
+To generate a GraphQL type, we can use the provided Rails generator:
 
 ```bash
 rails g graphql:object Task
