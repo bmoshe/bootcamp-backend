@@ -30,7 +30,12 @@ end
 ```
 
 All queries must inherit the `Queries::BaseQuery` parent class, and define `resolve` method.
-The resolve method is what actually implements the logic of the query.
+The `resolve` method is what actually implements the logic of the query.
+
+Inside of the `resolve` method, you have access to many of the same functions you do in a controller action:
+ - `current_session` and `current_user`, which get you the current login session and the association user
+ - `authorize(...)`, which validates an action using a Policy
+ - `policy_scope(...)`, which calls the Policy::Scope to restrict a data set to what a user can see
 
 ### Defining Arguments and Return Types
 Since GraphQL is statically typed, we'll need to provide it with a bit of additional type information.
