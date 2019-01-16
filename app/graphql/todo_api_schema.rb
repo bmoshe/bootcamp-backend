@@ -7,7 +7,7 @@ class TodoApiSchema < GraphQL::Schema
   instrument(:field, ErrorHandlingInstrumentation.new)
   instrument(:field, ValidationErrorInstrumentation.new)
 
-  max_page_size(100)
+  default_max_page_size(100)
 
   def self.resolve_type(_type, object, _context)
     "Types::#{object.class.name}Type".safe_constantize
