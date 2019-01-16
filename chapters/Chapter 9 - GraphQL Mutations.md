@@ -69,6 +69,15 @@ We don't need input types for our `Delete___` mutations, since will only require
 The `Mutations::CompleteTask` mutation also doesn't require one, since it should also only require an ID.
 
 ### Defining Arguments and Return Types
+Similar to queries, mutations must define a return type and arguments. However, for mutations, we define fields that
+are returned as part of the result of the mutation. GraphQL Ruby will then generate a type that contains these fields,
+and assign that as the result of the mutation.
+
+Mutations will generally need to return two pieces of information:
+ - The object which the mutation was interacting with
+ - A list of errors that ocurred, which should be presented to the user
+
+Going with our example of the `Mutations::CreateTaskList` mutation, we would define something like:
 
 ```ruby
 class Mutations::CreateTaskList < Mutations::BaseMutation
@@ -81,6 +90,14 @@ class Mutations::CreateTaskList < Mutations::BaseMutation
   end
 end
 ```
+
+Above, we've defined our mutation to accept an argument `input`, which is the input type that was defined for this mutation.
+We also defined that the mutation returns an object containing two fields:
+ - `task_list`, which is the `TaskList` record that was created
+ - `errors`, which is a list of error messages
+
+**NOTE**: We defined `task_list` as being nullable! This is because we don't want to return the `TaskList` if it's invalid.
+If the create operation fails, a list of `errors` will be returned, and the `task_list` property will be `null`.
 
 #### Error Handling in Mutations
 Note how our mutation includes an `errors` field, which is an Array of Strings.
@@ -95,6 +112,15 @@ This means you should use `create!`, `update!`, and `save!` in your mutations (r
 `save`), since they can automatically make use of this error handling.
 
 ### Implementing the Create Task List Mutation
+The body of our `Mutations::CreateTaskList` mutation will be very similar to the `create` method in the controller.
+We need to `authorize(...)` the action using the `TaskListPolicy`, associate the `TaskList` to the current user,
+and save the record into the database.
+
+Once we've finished with all the logic we need to perform, we need to return the result of the mutation.
+Since the result of our mutation has multiple fields, we return a Hash that contains keys for each field that
+we want to return.
+
+Using the `Mutations::CreateTaskList` mutation as an example, this would look like:
 
 ```ruby
 def resolve(input:)
@@ -107,7 +133,24 @@ def resolve(input:)
 end
 ```
 
+**NOTE**: We return an empty Array of `errors` when the mutation is successful.
+This is because we defined our `errors` field to be non-nullable. Having `errors` be `nil`, or not including it
+in the Hash would result in a GraphQL Error being raised.
+
 ## Testing Mutations with RSpec
+Much like queries, GraphQL mutations are implemented as POROs in Ruby, which makes testing them very easy.
+There's a couple of examples of how to test GraphQL mutations in the `spec` folder:
+ - [Mutations::LogIn](../spec/graphql/mutations/log_in_spec.rb)
+ - [Mutations::LogOut](../spec/graphql/mutations/log_out_spec.rb)
+
+### Writing Factories for Input Types
+**TODO**
+
+In general, tests should ensure that:
+ - The mutation returns the correct result
+ - The mutation correctly modifies the state of the database
+ - The mutation raises validation errors when the input is invalid
+ - The mutation raises correctly raises authorization errors
 
 # Chapter 9 - Checklist
 Here's a checklist of things that you should've covered by the time you've finished with this chapter:
