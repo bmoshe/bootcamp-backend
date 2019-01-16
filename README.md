@@ -1,6 +1,6 @@
 # Bootcamp Project Backend - Todo List App
 In this project, we're going to be building a small web-app that keeps track of tasks for a TODO list.
-We're going to allow the user to create multiple seperate lists (which we call task lists), to stay organized.
+We're going to allow the user to create multiple separate lists (which we call task lists), to stay organized.
 The backend project will provide an API that will be consumed by the frontend.
 
 Users of our app will be able to:
@@ -17,6 +17,7 @@ Tags are also already provided for you, but you'll need to implement the mechani
 ## Bootcamp Chapters
 The bootcamp project consists of several chapters. They should be completed in order, as many of the later chapters
 will rely on code you write in the earlier ones.
+Each chapter includes a checklist which lists the key tasks that need to be completed before moving on.
 
  - [Chapter 0 - Getting Started](./chapters/Chapter%200%20-%20Getting%20Started.md)
  - [Chapter 1 - Models](./chapters/Chapter%201%20-%20Models.md)
@@ -29,6 +30,12 @@ will rely on code you write in the earlier ones.
  - [Chapter 8 - GraphQL Queries](./chapters/Chapter%208%20-%20GraphQL%20Queries.md)
  - [Chapter 9 - GraphQL Mutations](./chapters/Chapter%209%20-%20GraphQL%20Mutations.md)
 
+Once you've finished all of the chapters, you should move onto the frontend portion of the bootcamp project.
+
 ## Bonus - User Sign Up
 As an optional bonus, use what you've learned to implement a User sign-up flow.
 You can also allow Users to edit their profile.
+
+## Feedback
+If you have any feedback either during or after completing your bootcamp project, please direct it to us!
+If you run into any issues or mistakes in any of the material, please open issues on this repo.
