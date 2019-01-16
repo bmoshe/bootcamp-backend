@@ -143,14 +143,41 @@ There's a couple of examples of how to test GraphQL mutations in the `spec` fold
  - [Mutations::LogIn](../spec/graphql/mutations/log_in_spec.rb)
  - [Mutations::LogOut](../spec/graphql/mutations/log_out_spec.rb)
 
-### Writing Factories for Input Types
-**TODO**
-
 In general, tests should ensure that:
  - The mutation returns the correct result
  - The mutation correctly modifies the state of the database
  - The mutation raises validation errors when the input is invalid
  - The mutation raises correctly raises authorization errors
+
+### Writing Factories for Input Types
+Mutations that accept complex inputs (like the `Mutations::CreateTaskList` mutation) can get messy, when constructing
+the input object. To keep them clean, we can construct the input object using a factory, much like we do with models.
+
+Factories for input types are kept in `spec/factories/graphql`, and like all factories, the file name should be plural.
+ie. The `Types::CreateTaskListInputType` factory would live in `spec/factories/graphql/create_task_list_inputs.rb`,
+and it would look something like this:
+
+```ruby
+FactoryBot.define do
+  factory :create_task_list_input, class: OpenStruct do
+    name { Faker::Lorem.sentence }
+    ...
+  end
+end
+```
+
+**NOTE**: The class constructed by this factory is an `OpenStruct`. This is a datatype provided by Ruby that behaves
+similarly to the input object we receive from GraphQL Ruby, when the mutation is called.
+
+This factory can be used like any other factory.
+For example, we can use it to call the mutation from the console:
+
+```ruby
+session   = Session.last
+input     = FactoryBot.build(:create_task_list_input)
+mutation  = Mutations::CreateTaskList.new(object: nil, context: { current_session: session })
+task_list = mutation.call(input: input) # => #<TaskList id: 1, ...>
+```
 
 # Chapter 9 - Checklist
 Here's a checklist of things that you should've covered by the time you've finished with this chapter:
