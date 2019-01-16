@@ -22,7 +22,7 @@ We could have actually done the same for our REST API, but we kept the actions t
 
 ## Defining Mutations
 
-**NOTE**: While GraphQL Ruby does provide generators for mutations, they do nothing behave correctly at the moment.
+**NOTE**: While GraphQL Ruby does provide generators for mutations, they do not behave correctly at the moment.
 Refrain from using them (for the time being), as doing so will leave your code full of syntax errors.
 
 Since we can't use generators to create mutations, we'll do so manually. Mutations live in `app/graphql/mutations`.

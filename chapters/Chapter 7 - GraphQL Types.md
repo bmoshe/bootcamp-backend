@@ -163,7 +163,7 @@ So, if we wanted to define a `tasks` connection on the `Types::TaskLikeType`, we
 ```ruby
 class Types::TaskListType < Types::BaseObject
   ...
-  field :tasks, Types::TaskListType.connection_type, null: false
+  field :tasks, Types::TaskType.connection_type, null: false
 end
 ```
 
